@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no" />
+        <meta name="description" content="文宏程式學院 學習筆記，內容包括，網頁爬蟲、網頁設計、line bot 應用、以及網路安全等學習筆記" />
+        <meta name="author" content="Webpixels" />
+        <title>文宏學習筆記</title>
+        <style>
+            /*.edit_btn: hover{*/
+            /*    */
+            /*}*/
+            .btn-clipboard_ {
+                font-size: .875rem;
+                font-weight: bold;
+                position: absolute;
+                z-index: 10;
+                top: 1px;
+                right: 1px;
+                display: block;
+                padding: 0.25rem 0.5rem;
+                cursor: pointer;
+                color: #273444;
+                border: 0;
+                border-bottom: 1px solid #e2e8f0;
+                border-left: 1px solid #e2e8f0;
+                border-radius: 0 0 0 4px;
+                background-color: #fff;
+            }
+            .lead {
+                font-size: 1.25rem!important;
+                font-weight: 300;
+            }
+            @media (max-width: 1440px) {
+                .lead {
+                    font-size: 1.2rem!important;
+                    font-weight: 300;
+                }
+            }@media (max-width: 991px) {
+                .lead {
+                    font-size: 1.15rem!important;
+                    font-weight: 300;
+                }
+            }@media (max-width: 576px) {
+                .lead {
+                    font-size: 1.125rem!important;
+                    font-weight: 300;
+                }
+                /*.docs-content .highlight {*/
+                /*     margin: 0px;*/
+                /*}*/
+            }@media (max-width: 500px) {
+                .lead {
+                    font-size: 1.05rem!important;
+                    font-weight: 300;
+                }
+            }
+            @keyframes hidePreloader {
+                0% {
+                    width: 100%;
+                    height: 100%;
+                }
+                100% {
+                    width: 0;
+                    height: 0;
+                }
+            }
+            body > div.preloader {
+                position: fixed;
+                background: #fff;
+                width: 100%;
+                height: 100%;
+                z-index: 1071;
+                opacity: 0;
+                transition: opacity 0.5s ease;
+                overflow: hidden;
+                pointer-events: none;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            body:not(.loaded) > div.preloader {
+                opacity: 1;
+            }
+            body:not(.loaded) {
+                overflow: hidden;
+            }
+            body.loaded > div.preloader {
+                animation: hidePreloader 0.5s linear 0.5s forwards;
+            }
+        </style>
+        <script>
+            window.addEventListener("load", function () {
+                setTimeout(function () {
+                    document.querySelector("body").classList.add("loaded");
+                }, 0);
+            });
+        </script>
+        <link rel="icon" href="/static/picture/favicon.png" type="image/png" />
+        <link rel="stylesheet" href="/static/css/all.min.css" />
+        <link rel="stylesheet" href="/static/css/quick-website.css" />
+        <link rel="stylesheet" href="/static/css/docs.css" />
+        <script src="/static/js/jquery.min.js"></script>
+        <script src="/static/js/bootstrap.bundle.min.js"></script>
+        <script src="/static/js/svg-injector.min.js"></script>
+        <script src="/static/js/feather.min.js"></script>
+        <script src="/static/js/highlight.min.js"></script>
+        <script src="/static/js/clipboard.min.js"></script>
+        <script src="/static/js/quick-website.js"></script>
+
+    </head>
+    <body class="docs">
+        <div class="preloader">
+            <div class="spinner-border text-primary" role="status"><span class="sr-only">Loading...</span></div>
+        </div>
+        <!--    navbar 載入    -->
+        <header class="header" id="header-main">
+            <nav class="navbar navbar-main navbar-expand-lg fixed-top navbar-shadow navbar-light bg-white border-bottom" id="navbar-main">
+                <div class="container-fluid justify-content-between">
+                    <div class="navbar-user d-lg-none">
+                        <ul class="navbar-nav flex-row align-items-center">
+                            <li class="nav-item">
+                                <a href="#" class="nav-link nav-link-icon sidenav-toggler" data-action="sidenav-pin" data-target="#sidenav-main"><i data-feather="menu"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                    <a href="/" class="navbar-brand" ><img alt="Image placeholder" src="/static/picture/dark.svg" id="navbar-logo" /> <sup class="text-muted text-xs text-uppercase">Docs</sup></a>
+                    <div class="collapse navbar-collapse" id="navbar-main-collapse">
+                        <ul style="margin-right: 10px !important;" class="navbar-nav align-items-center mx-auto">
+                            <li class="nav-item"><a class="nav-link" href="/">首頁</a></li>
+                            <li class="nav-item dropdown dropdown-animate" data-toggle="hover">
+                                <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">學習筆記</a>
+                                <div class="dropdown-menu dropdown-menu-single" >
+                                    <span id = "load_data"></span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    {% if user.is_authenticated %}
+                    <a href="{% url 'account_logout' %}" class="btn btn-sm btn-primary ml-4 btn-icon d-none d-lg-inline-flex">
+                        <span class="btn-inner--text">登出</span>
+                    </a>
+                    {% else %}
+                    <a href="{% url 'account_login' %}" class="btn btn-sm btn-primary ml-4 btn-icon d-none d-lg-inline-flex">
+                        <span class="btn-inner--text">登入</span>
+                    </a>
+                    {% endif %}
+                </div>
+            </nav>
+        </header>
+        {% block content %}
+        <!--  navbar 結束     -->
+        <!--  側邊欄加載入  -->
+        <div class="container-fluid container-docs">
+            <nav class="sidenav navbar navbar-vertical navbar-expand-xs navbar-light bg-white" id="sidenav-main">
+                <div class="scrollbar-inner px-4">
+                    <div class="docs-sidebar pt-6 pt-lg-7">
+                        <h6  class="mt-4"><a onclick="js_goTop()">{{ok_theme.note_title}}</a></h6>
+                        <span id ="side_bar"> </span>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <div class="main-content row position-relative pb-5">
+            <div class="col-xl-11 docs-content pb-5 padding-width">
+                <div class="docs-title" >
+                    <h1  >{{ok_theme.note_title}}</h1>
+                    <p class="lead mb-0">{{ok_theme.introduce}}</p>
+                    <div class="mt-4">
+                        <a href="http://wenhong.online" target="_blank"><i data-feather="external-link" class="mr-2"></i> 查看官網</a>
+                    </div>
+                </div>
+                <span id="datas">
+
+                </span>
+
+            </div>
+        </div>
+
+
+
+
+        {% endblock %}
+
+
+        <script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.4/axios.min.js" integrity="sha512-LUKzDoJKOLqnxGWWIBM4lzRBlxcva2ZTztO8bTcWPmDSpkErWx0bSP4pdsjNH8kiHAUPaT06UXcb+vOEZH+HpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script>
+
+        var iddict = {}
+        //側邊欄加載
+        url = location.href
+        var request_string = url.split('?')[1]
+        axios.post(`/note/page/?${request_string}`).then(res=>{
+            titles = res.data.titles
+            var main_title_ = []
+            titles.forEach((item)=>{
+                if(main_title_.includes(item.main_title)){
+                    $(`#${item.main_title.replace(" ","").replace('=','').replace('.','')}`).append($(`
+                        <li class="nav-item"><a href="#${item.sub_title}" class="nav-link">${item.sub_title}</a></li>
+                    `))
+                }else{
+                    main_title_.push(item.main_title)
+                    console.log(main_title_)
+                    $(`#side_bar`).append($(`
+                        <h6  class="mt-4"><a onclick="js_goTop()">${item.main_title}</a></h6>
+                        <ul class="nav flex-column" id = "${item.main_title.replace(" ","").replace('=','').replace('.','')}">
+                             <li class="nav-item"><a href="#${item.sub_title}" class="nav-link">${item.sub_title}</a></li>
+                        </ul>
+                    `))
+                }
+            })
+
+            // 筆記加載
+            datas = res.data.data
+            var idk = 0
+            var main_title_ = []
+            datas.forEach(item=>{
+                if (item.picture === null){
+                    if( main_title_.includes(item.main_title)){
+                        $('#datas').append($(`
+                            <div style="display: flex; align-items: center;">
+                                <h3 style="margin-top: 10px" id="${item.title.replace(' ','')}">${item.title}  </h3> <a style="margin:10px;margin-bottom: 10px;color: #abaeb0"  href = "/note/edit/?sub_theme=${item.title}"><i class="fa fa-edit"> </i> 編輯</a>
+                            </div>
+                            <p class="lead mb-0" style="white-space:pre-wrap">${item.text}</p>
+                            <div class="docs-example ">
+                                <div class="position-relative fade mt-3 collapse show" >
+                                    <button onclick="copy_(${item.id})" style="z-index: 100;" class="action-item btn-clipboard" data-original-title="Copy to clipboard">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox = "0 0 24 24" fill="none" stroke = "currentColor" stroke-width = "2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-copy">
+                                            <rect  x="9" y="9" width ="13" height = "13" rx ="2" ry="2"></rect>
+                                            <path  d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                        </svg>
+                                    </button>
+                                    <figure style="margin-left:0" class="highlight hljs python" >
+                                        <code  class="language-python hljs python" data-lang="python" style="line-height: 2.2;border: 10px">
+                                            <span style="white-space:pre-wrap">${item.code}</span>
+                                        </code>
+                                    </figure>
+                                </div>
+                            </div>
+                        `))
+                    }else{
+                        main_title_.push(item.main_title)
+                        idk+=1
+                        $('#datas').append($(`
+                            <h2 style="margin-top: 10px" id="${item.main_title.replace(' ','')}">${idk}. ${item.main_title}</h2>
+                            <div style="display: flex; align-items: center;">
+                                <h3 style="margin-top: 10px" id="${item.title.replace(' ','')}">${item.title}  </h3> <a style="margin:10px;margin-bottom: 10px;color: #abaeb0"  href = "/note/edit/?sub_theme=${item.title}"><i class="fa fa-edit"> </i> 編輯</a>
+                            </div>
+                            <p class="lead mb-0" style="white-space:pre-wrap">${item.text}</p>
+                            <div class="docs-example">
+                                <div class="position-relative fade mt-3 collapse show" >
+                                    <button onclick="copy_(${item.id})" style="z-index: 100;" class="action-item btn-clipboard" data-original-title="Copy to clipboard">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox = "0 0 24 24" fill="none" stroke = "currentColor" stroke-width = "2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-copy">
+                                            <rect  x="9" y="9" width ="13" height = "13" rx ="2" ry="2"></rect>
+                                            <path  d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                        </svg>
+                                    </button>
+                                    <figure style="margin-left:0" class="highlight hljs " >
+                                        <code style="line-height: 2.2;border: 10px;" class="language-python hljs"  >
+                                           <span style="white-space:pre-wrap">${item.code}</span>
+                                        </code>
+                                    </figure>
+                                </div>
+                            </div>
+                        `))
+                    }
+                }else{
+                    if(main_title_.includes(item.main_title)){
+                        $('#datas').append($(`
+                            <div style="display: flex; align-items: center;">
+                                <h3 style="margin-top: 10px" id="${item.title.replace(' ','')}">${item.title}  </h3> <a style="margin:10px;margin-bottom: 10px;color: #abaeb0"  href = "/note/edit/?sub_theme=${item.title}"><i class="fa fa-edit"> </i> 編輯</a>
+                            </div>
+                            <p class="lead mb-0" style="white-space:pre-wrap">${item.text}</p>
+                            <div style="margin-top :20px " >
+                                <img style = "border-radius: calc(0.75rem - 1px)" class="card-img-top" src="/img/${item.picture}" alt="Card image cap" />
+                            </div>
+                            <div class="docs-example ">
+                                <div class="position-relative fade mt-3 collapse show" >
+                                    <button onclick="copy_(${item.id})" style="z-index: 100;" class="action-item btn-clipboard" data-original-title="Copy to clipboard">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox = "0 0 24 24" fill="none" stroke = "currentColor" stroke-width = "2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-copy">
+                                            <rect  x="9" y="9" width ="13" height = "13" rx ="2" ry="2"></rect>
+                                            <path  d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                        </svg>
+                                    </button>
+                                    <figure style="margin-left:0" class="highlight hljs python" >
+                                        <code  class="language-python hljs python" data-lang="python" style="line-height: 2.2;border: 10px">
+                                            <span style="white-space:pre-wrap">${item.code}</span>
+                                        </code>
+                                    </figure>
+                                </div>
+                            </div>
+                        `))
+                    }else{
+                        main_title_.push(item.main_title)
+                        idk+=1
+                        $('#datas').append($(`
+                            <h2 style="margin-top: 10px" id="${item.main_title.replace(' ','')}">${idk}. ${item.main_title}</h2>
+                            <div style="display: flex; align-items: center;">
+                                <h3 style="margin-top: 10px" id="${item.title.replace(' ','')}">${item.title}  </h3> <a style="margin:10px;margin-bottom: 10px;color: #abaeb0"  href = "/note/edit/?sub_theme=${item.title}"><i class="fa fa-edit"> </i> 編輯</a>
+                            </div>
+                            <p class="lead mb-0" style="white-space:pre-wrap">${item.text}</p>
+                            <div class = "card" style="margin-top :20px " >
+                                <img style = "border-radius: calc(0.75rem - 1px)" class="card-img-top" src="/img/${item.picture}" alt="Card image cap" />
+                            </div>
+                            <div class="docs-example">
+                                <div class="position-relative fade mt-3 collapse show" >
+                                    <button onclick="copy_(${item.id})" style="z-index: 100;" class="action-item btn-clipboard" data-original-title="Copy to clipboard">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox = "0 0 24 24" fill="none" stroke = "currentColor" stroke-width = "2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-copy">
+                                            <rect  x="9" y="9" width ="13" height = "13" rx ="2" ry="2"></rect>
+                                            <path  d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                        </svg>
+                                    </button>
+                                    <figure style="margin-left:0" class="highlight hljs " >
+                                        <code style="line-height: 2.2;border: 10px;" class="language-python hljs"  >
+                                           <span style="white-space:pre-wrap">${item.code}</span>
+                                        </code>
+                                    </figure>
+                                </div>
+                            </div>
+                        `))
+                    }
+                }
+                iddict[`${item.id}`] = `${item.code}`
+            })
+        })
+
+        //利用json 儲存並利用id查找，在複製到剪貼簿
+        function copy_(id){
+            const value=iddict[id]
+            const el = document.createElement('textarea');
+            el.value = value;
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+        }
+
+        axios.post('/').then(res=>{
+            themes = res.data.data
+            themes.forEach((item)=>{
+                $('#load_data').append($(`
+                    <a href="/note/page?theme=${item.note_title}" class="dropdown-item">${item.note_title}</a>
+                `))
+            })
+        })
+    </script>
+
+    <script>
+            feather.replace({ width: "1em", height: "1em" });
+    </script>
+    <script>
+            !(function (e, t, a, n, g) {
+                (e[n] = e[n] || []), e[n].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+                var m = t.getElementsByTagName(a)[0],
+                    r = t.createElement(a);
+                (r.async = !0), (r.src = "/static/js/gtm.js"), m.parentNode.insertBefore(r, m);
+            })(window, document, "script", "dataLayer");
+    </script>
+    <script>
+        function js_goTop(){
+            $("html,body").animate({scrollTop: 0,}, 600)
+        }
+    </script>
+    <script src = "/static/js/jquery.min.js"></script>
+    <script src = "/static/js/feather.min.js"></script>
+
+    <script type="text/javascript">
+      function downloadJSAtOnload() {
+        var element = document.createElement("script");
+        element.src = "/static/js/jquery.min.js";
+        document.body.appendChild(element);
+      }
+      if (window.addEventListener)
+        window.addEventListener("load", downloadJSAtOnload, false);
+      else if (window.attachEvent)
+        window.attachEvent("onload", downloadJSAtOnload);
+      else window.onload = downloadJSAtOnload;
+    </script>
+
+
+
+    <script type="text/javascript">
+      function downloadJSAtOnload() {
+        var element = document.createElement("script");
+        element.src = "/static/js/bootstrap.bundle.min.js";
+        document.body.appendChild(element);
+      }
+      if (window.addEventListener)
+        window.addEventListener("load", downloadJSAtOnload, false);
+      else if (window.attachEvent)
+        window.attachEvent("onload", downloadJSAtOnload);
+      else window.onload = downloadJSAtOnload;
+
+    </script>
+    <script type="text/javascript">
+      function downloadJSAtOnload() {
+        var element = document.createElement("script");
+        element.src = "/static/js/highlight.min.js";
+        document.body.appendChild(element);
+      }
+      if (window.addEventListener)
+        window.addEventListener("load", downloadJSAtOnload, false);
+      else if (window.attachEvent)
+        window.attachEvent("onload", downloadJSAtOnload);
+      else window.onload = downloadJSAtOnload;
+
+    </script>
+
+     <script type="text/javascript">
+      function downloadJSAtOnload() {
+        var element = document.createElement("script");
+        element.src = "/static/js/clipboard.min.js";
+        document.body.appendChild(element);
+      }
+      if (window.addEventListener)
+        window.addEventListener("load", downloadJSAtOnload, false);
+      else if (window.attachEvent)
+        window.attachEvent("onload", downloadJSAtOnload);
+      else window.onload = downloadJSAtOnload;
+
+    </script>
+
+              <script type="text/javascript">
+      function downloadJSAtOnload() {
+        var element = document.createElement("script");
+        element.src = "/static/js/quick-website.js";
+        document.body.appendChild(element);
+      }
+      if (window.addEventListener)
+        window.addEventListener("load", downloadJSAtOnload, false);
+      else if (window.attachEvent)
+        window.attachEvent("onload", downloadJSAtOnload);
+      else window.onload = downloadJSAtOnload;
+
+    </script>
+    <script type="text/javascript">
+      function downloadJSAtOnload() {
+        var element = document.createElement("script");
+        element.src = "/static/js/feather.min.js";
+        document.body.appendChild(element);
+      }
+      if (window.addEventListener)
+        window.addEventListener("load", downloadJSAtOnload, false);
+      else if (window.attachEvent)
+        window.attachEvent("onload", downloadJSAtOnload);
+      else window.onload = downloadJSAtOnload;
+
+    </script>
+    </body>
+</html>

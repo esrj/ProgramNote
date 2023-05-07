@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no" />
+        <meta name="description" content="文宏程式學院 學習筆記，內容包括，網頁爬蟲、網頁設計、line bot 應用、以及網路安全等學習筆記" />
+        <meta name="author" content="文宏" />
+        <title>文宏學習筆記</title>
+        <style>
+            @keyframes hidePreloader {
+                0% {
+                    width: 100%;
+                    height: 100%;
+                }
+                100% {
+                    width: 0;
+                    height: 0;
+                }
+            }
+            body > div.preloader {
+                position: fixed;
+                background: #fff;
+                width: 100%;
+                height: 100%;
+                z-index: 1071;
+                opacity: 0;
+                transition: opacity 0.5s ease;
+                overflow: hidden;
+                pointer-events: none;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            body:not(.loaded) > div.preloader {
+                opacity: 1;
+            }
+            body:not(.loaded) {
+                overflow: hidden;
+            }
+            body.loaded > div.preloader {
+                animation: hidePreloader 0.5s linear 0.5s forwards;
+            }
+            .foot_margin{
+                margin-left: auto;
+            }
+            @media (max-width: 576px) {
+                .foot_margin {
+                    margin-left: 10px
+                }
+                .lead {
+                    font-size: 1rem !important;
+                    font-weight: 300;
+                }
+
+            }
+
+            @media (max-width: 500px) {
+                .fontsize {
+                    font-size: 15px;
+                }
+                .lead {
+                    font-size: 1rem !important;
+                    font-weight: 300;
+                }
+            }
+
+            @media (max-width: 480px) {
+                .foot_margin {
+                    display: none;
+                }
+            }
+        </style>
+        <script>
+            window.addEventListener("load", function () {
+                setTimeout(function () {
+                    document.querySelector("body").classList.add("loaded");
+                }, 300);
+            });
+        </script>
+        <link rel="icon" href="/static/picture/favicon.png" type="image/png" />
+        <link rel="stylesheet" href="/static/css/all.min.css" />
+        <link rel="stylesheet" href="/static/css/quick-website.css" id="stylesheet" />
+    </head>
+    <body>
+        <div class="preloader">
+            <div class="spinner-border text-primary" role="status"><span class="sr-only">Loading...</span></div>
+        </div>
+        <div class="modal fade" tabindex="-1" role="dialog" id="modal-cookies" data-backdrop="false" aria-labelledby="modal-cookies" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-aside left-4 right-4 bottom-4">
+                <div class="modal-content bg-dark-dark">
+                    <div class="modal-body">
+                        <p class="text-sm text-white mb-3">We use cookies so that our themes work for you. By using our website, you agree to our use of cookies.</p>
+                        <a href="javascript:;" class="btn btn-sm btn-white" target="_blank">Learn more</a> <button type="button" class="btn btn-sm btn-primary mr-2" data-dismiss="modal">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <nav class="navbar navbar-expand-lg navbar-light bg-white">
+            <div class="container">
+                <a class="navbar-brand" href="/"><img alt="Image placeholder" src="/static/picture/dark.svg" id="navbar-logo" /> </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <ul class="navbar-nav mt-4 mt-lg-0 ml-auto">
+                        <li class="nav-item"><a class="nav-link" href="/">首頁</a></li>
+                        <li class="nav-item dropdown dropdown-animate" data-toggle="hover">
+                            <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">學習筆記</a>
+                            <div class="dropdown-menu dropdown-menu-single" >
+                                <span id = "load_data"></span>
+                            </div>
+                        </li>
+                    </ul>
+                    {% if user.is_authenticated %}
+                    <a class="navbar-btn btn btn-sm btn-primary d-none d-lg-inline-block ml-3" href="{% url 'account_logout' %}">登出</a>
+                    {% else %}
+                    <a class="navbar-btn btn btn-sm btn-primary d-none d-lg-inline-block ml-3" href="/accounts/login">登入</a>
+                    {% endif %}
+
+                    {% if user.is_authenticated %}
+                    <div style="margin-top: 20px;" class="d-lg-none text-center"><a style="background-color: #018bff;border-color: #018bff " href="{% url 'account_logout' %}" class="btn btn-block btn-sm btn-warning">登出</a></div>
+                    {% else %}
+                    <div style="margin-top: 20px;" class="d-lg-none text-center"><a style="background-color: #018bff;border-color: #018bff " href="/accounts/login" class="btn btn-block btn-sm btn-warning">登入</a></div>
+                    {% endif %}
+                </div>
+            </div>
+        </nav>
+        {%block content%}
+        <section class="slice py-7">
+            <div class="container">
+                <div class="row row-grid align-items-center">
+                    <div class="col-12 col-md-5 col-lg-6 order-md-2 text-center">
+                        <figure class="w-100"><img alt="Image placeholder" src="/static/picture/illustration-3.svg" class="img-fluid mw-md-120" /></figure>
+                    </div>
+                    <div class="col-12 col-md-7 col-lg-6 order-md-1 pr-md-5">
+                        <h1 class="display-4 text-center text-md-left mb-3">文宏程式學院 <strong class="text-primary">學習筆記</strong></h1>
+                        <p class="lead text-center text-md-left text-muted">內容包括，網頁爬蟲、網頁設計、line bot 應用、以及網路安全等學習筆記</p>
+                        <div class="text-center text-md-left mt-5">
+                            <a href="http://wenhong.online/" class="btn btn-primary btn-icon" target="_blank">
+                                <span class="btn-inner--text">查看官網</span> <span class="btn-inner--icon"><i data-feather="chevron-right"></i></span>
+                            </a>
+                            <a href="/note/page/?theme=python 網路爬蟲" class="btn btn-neutral btn-icon d-none d-lg-inline-block" target="_blank">馬上開始</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="slice slice-lg  pt-5 pt-lg-8" style="background-color: #f7fbf7;padding-bottom:10px ">
+            <div class="shape-container shape-line shape-position-top shape-orientation-inverse">
+                    <svg
+                        width="2560px"
+                        height="100px"
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                        preserveaspectratio="none"
+                        x="0px"
+                        y="0px"
+                        viewbox="0 0 2560 100"
+                        style="enable-background: new 0 0 2560 100;"
+                        xml:space="preserve"
+                        class=""
+                    >
+                    <polygon points="2560 0 2560 100 0 100"></polygon>
+                </svg>
+            </div>
+            <div class="container position-relative zindex-100">
+                <div class="col">
+                    <div class="row justify-content-center">
+                        <div class="col-md-10 text-center">
+                            <div class="mt-4 mb-6">
+                                <h2 class="h1 " style="color: #3f3a64">面對時代的潮流，堅定信心</h2>
+                                <h5 style="margin: 18px" class=" mt-3">一起踏上成為 IT 人之路</h5>
+                                <a href="/note/page/?theme=python%網路爬蟲" class="btn btn-neutral btn-icon d-none d-lg-inline-block" target="_blank">馬上開始</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="slice slice-lg" id="sct-form-contact">
+            <div class="container position-relative zindex-100">
+                <div class="row justify-content-center mb-5">
+                    <div class="col-lg-6 text-center" style="padding-top: 60px">
+                        <h3>聯絡我們</h3>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-lg-6">
+                        <div class="form-group"><input id="name" class="form-control form-control-lg" type="text" placeholder="使用者名稱" required="" /></div>
+                        <div class="form-group"><input id="email" class="form-control form-control-lg" type="email" placeholder="電子郵件信箱" required="" /></div>
+                        <div class="form-group"><input id="phone" class="form-control form-control-lg" type="text" placeholder="聯絡電話(非必填)" required="" /></div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group"><textarea id="content" style="height: 123px;" class="form-control form-control-lg" placeholder="提出你的問題 . . ." rows="3" required=""></textarea></div>
+                        <div class="text-center"><button type="reset" class="btn-reset d-none"></button> <button onclick="send()" type="submit" class="btn btn-block btn-lg btn-primary mt-4">傳送</button></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        {% endblock %}
+        <footer class="position-relative" id="footer-main">
+            <div class="footer pt-lg-7  " style="background-color: #EBF4F8;a">
+                <div class="shape-container shape-line shape-position-top shape-orientation-inverse">
+                    <svg
+                        width="2560px"
+                        height="100px"
+                        xmlns="http://www.w3.org/2000/svg"
+                        xmlns:xlink="http://www.w3.org/1999/xlink"
+                        preserveaspectratio="none"
+                        x="0px"
+                        y="0px"
+                        viewbox="0 0 2560 100"
+                        style="enable-background: new 0 0 2560 100;"
+                        xml:space="preserve"
+                        class=""
+                    >
+                        <polygon points="2560 0 2560 100 0 100"></polygon>
+                    </svg>
+                </div>
+                <div class="container pt-4">
+                    <div class="row" style="display: flex;flex-wrap: nowrap;" >
+                        <div class=" col-lg-2 mb-lg-0">
+                            <a href=""><img alt="Image placeholder" src="/static/picture/dark.svg" id="footer-logo" /></a>
+                        </div>
+                        <div  class="foot_margin col-lg-3  col-sm-4 mb-lg-0">
+                            <h6 class="heading mb-3 fontsize">聯絡電話</h6>
+                            <ul class="list-unstyled fontsize ">
+                                <li><a>0905-570-446</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-lg-3  col-sm-4  mb-lg-0">
+                            <h6 class="heading mb-3 fontsize">電子郵件信箱</h6>
+                            <ul class="list-unstyled fontsize">
+                                <li><a>wenhongli0510@gmail.com</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <hr class="divider divider-fade divider-dark my-4" />
+                    <div class="row align-items-center justify-content-md-between pb-4">
+                        <div class="col-md-12">
+                            <div class="copyright text-sm font-weight-bold text-center">
+                                網頁開發者：李紹宏
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.4/axios.min.js" integrity="sha512-LUKzDoJKOLqnxGWWIBM4lzRBlxcva2ZTztO8bTcWPmDSpkErWx0bSP4pdsjNH8kiHAUPaT06UXcb+vOEZH+HpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+        <script src="/static/js/jquery.min.js"></script>
+        <script src="/static/js/bootstrap.bundle.min.js"></script>
+        <script src="/static/js/svg-injector.min.js"></script>
+        <script src="/static/js/feather.min.js"></script>
+        <script src="/static/js/quick-website.js"></script>
+        <script>
+            feather.replace({ width: "1em", height: "1em" });
+        </script>
+        <script>
+            !(function (e, t, a, n, g) {
+                (e[n] = e[n] || []), e[n].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+                var m = t.getElementsByTagName(a)[0],
+                    r = t.createElement(a);
+                (r.async = !0), (r.src = "static/js/gtm.js"), m.parentNode.insertBefore(r, m);
+            })(window, document, "script", "dataLayer");
+        </script>
+        <script>
+            axios.post('/').then(res=>{
+                themes = res.data.data
+                themes.forEach((item)=>{
+                    $('#load_data').append($(`
+                        <a href="/note/page?theme=${item.note_title}" class="dropdown-item">${item.note_title}</a>
+                    `))
+                })
+            })
+        </script>
+        <script>
+            function send(){
+                if($('#name').val()&&$('#email').val()&&$('#content').val()){
+                    axios.post('/',{
+                        'name':$('#name').val(),
+                        'email':$('#email').val(),
+                        'phone':$('#phone').val(),
+                        'content':$('#content').val()
+                    }).then(()=>{
+                        swal({
+                            'title':'傳送成功',
+                            'text':'謝謝您的支持，我們會盡快回覆您',
+                            'icon':'success',
+                            'timer':1500,
+                        })
+                    })
+                }else{
+                    swal({
+                        'title':'傳送失敗',
+                        'text':'您填寫的資料不齊全',
+                        'icon':'info',
+                        'timer':1500,
+                    })
+                }
+            }
+        </script>
+    </body>
+</html>

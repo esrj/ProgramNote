@@ -1,0 +1,25 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<div class="page-wrapper">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-12 mx-auto">
+              <div style = "margin: 90px" class="error-page text-center error-404 not-found">
+                 <div class="error-header">
+                    <h1><strong>403</strong></h1>
+                 </div>
+                 <div class="error-message">
+                    <h3>很抱歉，編輯權限不足</h3>
+                 </div>
+
+                 <div class="error-content">
+                    點選以下按鈕返回主頁<br>
+                    <a href="/" class="btn btn-main">返回主頁面</a>
+                 </div>
+              </div>
+           </div>
+        </div>
+    </div><!-- #main -->
+</div><!-- #primary -->
+{% endblock %}

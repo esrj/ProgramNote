@@ -1,0 +1,77 @@
+{% extends 'account/base.html' %}
+{% load socialaccount %}
+{% block content %}
+<div class="card-body px-md-5 py-5">
+    <h6 class="h3">登入</h6>
+    <span class="clearfix"></span>
+    <form action ="" method = "POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <label class="form-control-label">使用者名稱</label>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i data-feather="user"></i></span>
+                </div>
+                <input class="form-control" id="username" placeholder="使用者名稱" />
+            </div>
+        </div>
+        <div class="form-group mb-0">
+            <div class="d-flex align-items-center justify-content-between">
+                <div><label class="form-control-label">密碼</label></div>
+                <div class="mb-2"><a href="#" class="small text-muted text-underline--dashed border-primary" data-toggle="password-text" data-target="#input-password">顯示密碼</a></div>
+            </div>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text"><i data-feather="key"></i></span>
+                </div>
+                <input type="password" class="form-control" id="input-password" placeholder="密碼" />
+            </div>
+        </div>
+        <div class="mt-4">
+            <a style="color:white" onclick="submit()" class="btn btn-block btn-primary">登入</a>
+        </div>
+        <div class="mt-4">
+            <a style="border-color:black;background-color:white;color:black" href="{% provider_login_url 'google' method='oauth2' %}" class="btn btn-block btn-primary">
+                <img style="vertical-align: bottom;width: 25px;height: auto" src="/static/picture/google-icon.png"> <span> </span>
+                <span style="margin-top: 5px"> 使用 google 繼續</span>
+            </a>
+        </div>
+    </form>
+    </div>
+<div class="card-footer px-md-5">尚未註冊帳號嗎 ? <a href="/accounts/signup/" class="font-weight-bold"> 創建帳號</a></div>
+<script src = "https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
+<script src="/static/js/feather.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+<script>
+    function submit(){
+        axios.post('/login/api/',{
+            'username':$('#username').val(),
+            'password':$('#input-password').val()
+        }).then(res=>{
+            if(res.data.errno == 0){
+                swal({
+                    'title':'登入成功',
+                    'text':'正在為您跳轉至主頁面',
+                    'icon':'success',
+                    'timer':1500,
+                    'button': false,
+                })
+                setTimeout(()=>{
+                    location.href = '/'
+                },1500)
+            }else(
+                swal({
+                    'title':'登入失敗',
+                    'text':'帳號或密碼不存在',
+                    'icon':'error',
+                    'timer':1500,
+                    'button': false,
+                })
+            )
+        })
+    }
+</script>
+{% endblock  %}
+{% block extra_body %}
+{% endblock %}

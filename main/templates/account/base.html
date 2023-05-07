@@ -1,0 +1,92 @@
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no" />
+        <meta name="description" content="文宏程式學院 學習筆記，內容包括，網頁爬蟲、網頁設計、line bot 應用、以及網路安全等學習筆記" />
+        <meta name="author" content="文宏" />
+        <title>文宏學習筆記</title>
+        <style>
+            @keyframes hidePreloader {
+                0% {
+                    width: 100%;
+                    height: 100%;
+                }
+                100% {
+                    width: 0;
+                    height: 0;
+                }
+            }
+            body > div.preloader {
+                position: fixed;
+                background: #fff;
+                width: 100%;
+                height: 100%;
+                z-index: 1071;
+                opacity: 0;
+                transition: opacity 0.5s ease;
+                overflow: hidden;
+                pointer-events: none;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            body:not(.loaded) > div.preloader {
+                opacity: 1;
+            }
+            body:not(.loaded) {
+                overflow: hidden;
+            }
+            body.loaded > div.preloader {
+                animation: hidePreloader 0.5s linear 0.5s forwards;
+            }
+        </style>
+        <script>
+            window.addEventListener("load", function () {
+                setTimeout(function () {
+                    document.querySelector("body").classList.add("loaded");
+                }, 300);
+            });
+        </script>
+        <link rel="icon" href="/static/picture/favicon.png" type="image/png" />
+        <link rel="stylesheet" href="/static/css/all.min.css" />
+        <link rel="stylesheet" href="/static/css/quick-website.css" id="stylesheet" />
+    </head>
+    <body>
+        <div class="modal fade" tabindex="-1" role="dialog" id="modal-cookies" data-backdrop="false" aria-labelledby="modal-cookies" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-aside left-4 right-4 bottom-4">
+                <div class="modal-content bg-dark-dark">
+                    <div class="modal-body">
+                        <p class="text-sm text-white mb-3">We use cookies so that our themes work for you. By using our website, you agree to our use of cookies.</p>
+                        <a href="javascript:;" class="btn btn-sm btn-white" target="_blank">Learn more</a> <button type="button" class="btn btn-sm btn-primary mr-2" data-dismiss="modal">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <section>
+            <div class="container d-flex flex-column">
+                <div class="row align-items-center justify-content-center min-vh-100">
+                    <div class="col-md-7 col-lg-5 col-xl-5 py-6 py-md-0">
+                        <div class="card shadow zindex-100 mb-0">
+
+                         {% block content %}
+                         {% endblock %}
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <script src="/static/js/jquery.min.js"></script>
+        <script src="/static/js/bootstrap.bundle.min.js"></script>
+        <script src="/static/js/svg-injector.min.js"></script>
+        <script src="/static/js/feather.min.js"></script>
+        <script src="/static/js/quick-website.js"></script>
+        <script>
+            feather.replace({ width: "1em", height: "1em" });
+        </script>
+
+    </body>
+</html>
