@@ -7,24 +7,17 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 import os
 from django.contrib.auth.decorators import login_required
-from .models import Theme,User,Contact
+from .models import Theme,User,Contact,Auth
 
-
-@csrf_exempt
 def main(request):
     if request.method == 'POST':
-        themes= Theme.objects.all().values("note_title")
-        try :
-            req = json.loads(request.body)
-            if req['phone']:
-                phone = req['phone']
-            else:
-                phone = 'none'
-            c = Contact.objects.create(username = req['name'],email = req['email'],phone = phone,content = req['content'])
-            c.save()
-        except:
-            pass
-        return JsonResponse({'data':list(themes)})
+        if request.user.is_authenticated == False:
+            return HttpResponse()
+        themes= Theme.objects.filter(author_id = request.user).all().values("title")
+        auth = Auth.objects.filter(authUser = request.user).all()
+        auth = list(map(lambda a:{'title':a.authTheme.title,'id':a.authTheme.id},auth))
+        print(auth)
+        return JsonResponse({'data':list(themes),'authData':auth})
     else:
         return render(request, 'index.html')
 
@@ -42,8 +35,16 @@ def login(request):
                     return JsonResponse({'errno': 0})
         return JsonResponse({'errno': 1})
 
+def uniqueUser(request):
+    req = json.loads(request.body)
+    username = req['username']
+    user = User.objects.filter(username = username).first()
+    if user != None:
+        print('重複')
+        return JsonResponse({"isUnique":False})
+    else:
+        return JsonResponse({'isUnique':True})
 
-@csrf_exempt
 def register(request):
     if request.method == 'POST':
         try:
@@ -54,9 +55,6 @@ def register(request):
             return JsonResponse({'errno': 1})
         except:
             return JsonResponse({'errno': 2})
-
-
-
 
 
 def handler404(request, exception):

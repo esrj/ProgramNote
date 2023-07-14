@@ -7,6 +7,9 @@
         <meta name="author" content="文宏" />
         <title>文宏學習筆記</title>
         <style>
+            .hide_btn{
+                display: none !important;
+            }
             @keyframes hidePreloader {
                 0% {
                     width: 100%;
@@ -42,6 +45,11 @@
             }
             .foot_margin{
                 margin-left: auto;
+            }
+            @media (max-width: 991px) {
+                .hide_btn{
+                    display: inline-block !important;
+                }
             }
             @media (max-width: 576px) {
                 .foot_margin {
@@ -103,25 +111,45 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <ul class="navbar-nav mt-4 mt-lg-0 ml-auto">
-                        <li class="nav-item"><a class="nav-link" href="/">首頁</a></li>
+                        {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a style="color: #838fa1" class="nav-link" href="/">首頁</a>
+                        </li>
                         <li class="nav-item dropdown dropdown-animate" data-toggle="hover">
-                            <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">學習筆記</a>
-                            <div class="dropdown-menu dropdown-menu-single" >
+                            <a style="color: #838fa1" class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">我的筆記</a>
+                            <div style="padding: 0.25rem 1.75rem;" class="dropdown-menu dropdown-menu-single" >
                                 <span id = "load_data"></span>
                             </div>
                         </li>
+                        <li class="nav-item dropdown dropdown-animate" data-toggle="hover">
+                            <a style="color: #838fa1" class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">共用筆記</a>
+                            <div style="padding: 0.25rem 1.75rem;" class="dropdown-menu dropdown-menu-single" >
+                                <span id = "load_authData"></span>
+                            </div>
+                        </li>
+                        <li class="hide_btn nav-item ">
+                            <a style="font-weight: 600;color: #838fa1" class="nav-link"  href="{% url 'account_logout' %}" >登出</a>
+                        </li>
+                        {% else %}
+                        <li class="hide_btn nav-item ">
+                            <a style="font-weight: 600;color: #838fa1" class="nav-link"  href="/accounts/login" >登入 / 註冊</a>
+                        </li>
+                        {% endif %}
+
                     </ul>
                     {% if user.is_authenticated %}
-                    <a class="navbar-btn btn btn-sm btn-primary d-none d-lg-inline-block ml-3" href="{% url 'account_logout' %}">登出</a>
+
+                        <li class="nav-item dropdown dropdown-animate" data-toggle="hover">
+                            <a  class="navbar-btn btn btn-sm btn-primary d-none d-lg-inline-block ml-3" href="#"><i class="fa fa-user"></i><span style="font-weight: 900">{{request.user.username}}</span> </a>
+                            <div style="padding: 0.25rem 1.75rem;" class="dropdown-menu dropdown-menu-single" >
+                                <a  href="{% url 'account_logout' %}" class="dropdown-item">登出</a>
+                            </div>
+                        </li>
+
                     {% else %}
-                    <a class="navbar-btn btn btn-sm btn-primary d-none d-lg-inline-block ml-3" href="/accounts/login">登入</a>
+                        <a class="navbar-btn btn btn-sm btn-primary d-none d-lg-inline-block ml-3" href="/accounts/login">登入 / 註冊</a>
                     {% endif %}
 
-                    {% if user.is_authenticated %}
-                    <div style="margin-top: 20px;" class="d-lg-none text-center"><a style="background-color: #018bff;border-color: #018bff " href="{% url 'account_logout' %}" class="btn btn-block btn-sm btn-warning">登出</a></div>
-                    {% else %}
-                    <div style="margin-top: 20px;" class="d-lg-none text-center"><a style="background-color: #018bff;border-color: #018bff " href="/accounts/login" class="btn btn-block btn-sm btn-warning">登入</a></div>
-                    {% endif %}
                 </div>
             </div>
         </nav>
@@ -136,10 +164,12 @@
                         <h1 class="display-4 text-center text-md-left mb-3">文宏程式學院 <strong class="text-primary">學習筆記</strong></h1>
                         <p class="lead text-center text-md-left text-muted">內容包括，網頁爬蟲、網頁設計、line bot 應用、以及網路安全等學習筆記</p>
                         <div class="text-center text-md-left mt-5">
-                            <a href="http://wenhong.online/" class="btn btn-primary btn-icon" target="_blank">
+                            <a style="height: 40px;display: inline" href="http://wenhong.online/" class="btn btn-primary btn-icon" >
                                 <span class="btn-inner--text">查看官網</span> <span class="btn-inner--icon"><i data-feather="chevron-right"></i></span>
                             </a>
-                            <a href="/note/page/?theme=python 網路爬蟲" class="btn btn-neutral btn-icon d-none d-lg-inline-block" target="_blank">馬上開始</a>
+                            <a style="height: 40px;display: inline" href="#" class="btn btn-neutral" >
+                                <span class="btn-inner--text">馬上開始</span> <span class="btn-inner--icon"></span>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -170,7 +200,7 @@
                             <div class="mt-4 mb-6">
                                 <h2 class="h1 " style="color: #3f3a64">面對時代的潮流，堅定信心</h2>
                                 <h5 style="margin: 18px" class=" mt-3">一起踏上成為 IT 人之路</h5>
-                                <a href="/note/page/?theme=python%網路爬蟲" class="btn btn-neutral btn-icon d-none d-lg-inline-block" target="_blank">馬上開始</a>
+<!--                                <a  href="/note/page/?theme=python%網路爬蟲" class="btn btn-neutral btn-icon d-none d-lg-inline-block" target="_blank">馬上開始</a>-->
                             </div>
                         </div>
                     </div>
@@ -186,13 +216,17 @@
                 </div>
                 <div class="row justify-content-center">
                     <div class="col-lg-6">
-                        <div class="form-group"><input id="name" class="form-control form-control-lg" type="text" placeholder="使用者名稱" required="" /></div>
-                        <div class="form-group"><input id="email" class="form-control form-control-lg" type="email" placeholder="電子郵件信箱" required="" /></div>
-                        <div class="form-group"><input id="phone" class="form-control form-control-lg" type="text" placeholder="聯絡電話(非必填)" required="" /></div>
+                        <div  class="form-group"><input style="height: 50px" id="name" class="form-control form-control-lg" type="text" placeholder="使用者名稱" required="" /></div>
+                        <div  class="form-group"><input style="height: 50px" id="email" class="form-control form-control-lg" type="email" placeholder="電子郵件信箱" required="" /></div>
+                        <div  class="form-group"><input style="height: 50px" id="phone" class="form-control form-control-lg" type="text" placeholder="聯絡電話(非必填)" required="" /></div>
                     </div>
                     <div class="col-lg-6">
-                        <div class="form-group"><textarea id="content" style="height: 123px;" class="form-control form-control-lg" placeholder="提出你的問題 . . ." rows="3" required=""></textarea></div>
-                        <div class="text-center"><button type="reset" class="btn-reset d-none"></button> <button onclick="send()" type="submit" class="btn btn-block btn-lg btn-primary mt-4">傳送</button></div>
+                        <div class="form-group"><textarea id="content" style="height: 116px;" class="form-control form-control-lg" placeholder="提出你的問題 . . ." rows="3" required=""></textarea></div>
+                        <div class="text-center">
+                            <button style="height: 50px" onclick="send()" type="submit" class="btn btn-block  btn-primary">
+                                <p>傳送</p>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -265,13 +299,43 @@
             })(window, document, "script", "dataLayer");
         </script>
         <script>
-            axios.post('/').then(res=>{
+
+
+            axios({
+                url:'/',
+                method:'POST',
+                headers:{'X-CSRFToken': "{{ csrf_token }}"}
+            }).then(res=>{
                 themes = res.data.data
-                themes.forEach((item)=>{
+                if(themes.length !== 0){
                     $('#load_data').append($(`
-                        <a href="/note/page?theme=${item.note_title}" class="dropdown-item">${item.note_title}</a>
+                        <a  href="/note/page/" class="dropdown-item">創建你的筆記</a>
                     `))
-                })
+                    themes.forEach((item)=>{
+                        $('#load_data').append($(`
+                            <a  href="/note/page?theme=${item.title}" class="dropdown-item">${item.title}</a>
+                        `))
+                    })
+                }else{
+                    $('#load_data').append($(`
+                        <a  href="/note/page/" class="dropdown-item">創建你的筆記</a>
+                    `))
+                }
+
+                authThemes = res.data.authData
+                if(authThemes.length !== 0){
+
+                    authThemes.forEach((item)=>{
+                         console.log(item)
+                        $('#load_authData').append($(`
+                            <a  href="/note/authPage?theme=${item.id}" class="dropdown-item">${item.title}</a>
+                        `))
+                    })
+                }else{
+                    $('#load_authData').append($(`
+                        <a  href="#" class="dropdown-item">目前沒有共用筆記</a>
+                    `))
+                }
             })
         </script>
         <script>

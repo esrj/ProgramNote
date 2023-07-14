@@ -14,7 +14,10 @@
                 </div>
                 <input class="form-control" id="username" placeholder="使用者名稱" />
             </div>
+            <span id="warn">
+            </span>
         </div>
+
         <div class="form-group mb-0">
             <div class="d-flex align-items-center justify-content-between">
                 <div><label class="form-control-label">密碼</label></div>
@@ -28,7 +31,7 @@
             </div>
         </div>
         <div class="mt-4">
-            <a style="color:white" onclick="register()" class="btn btn-block btn-primary">註冊帳號</a>
+            <a style="color:white" onclick="register_()" class="btn btn-block btn-primary">註冊帳號</a>
         </div>
     </form>
     </div>
@@ -38,10 +41,38 @@
 <script src="/static/js/feather.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
 <script>
-    function register(){
-        axios.post('/register/api/',{
-            'username':$('#username').val(),
-            'password':$('#input-password').val()
+
+    $("#username").keyup(()=>{
+        let username = $("#username").val()
+        axios({
+            url:'/isUnique/',
+            method:'POST',
+            data:{
+                'username':$('#username').val(),
+            },
+            headers:{'X-CSRFToken': "{{ csrf_token }}"},
+        }).then(res=>{
+            console.log(res.data.errno)
+            if(res.data.isUnique){
+                $('#warn').empty()
+                console.log('isUnique')
+            }else{
+                $('#warn').empty()
+                $('#warn').append($(`
+                    <p style="margin-left:5px;color:#ff3e3e">此使用者名稱已被使用</p>
+                `))
+            }
+        })
+    })
+    function register_(){
+        axios({
+            url:'/register/api/',
+            method:'POST',
+            data:{
+                'username':$('#username').val().trimEnd().replace('\n',''),
+                'password':$('#input-password').val()
+            },
+            headers:{'X-CSRFToken': "{{ csrf_token }}"},
         }).then(res=>{
             if(res.data.errno == 1){
                 swal({

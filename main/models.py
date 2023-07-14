@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-
+from ProgramNote import settings
 
 class Contact(models.Model):
     content = models.TextField(null=True, blank=True)
@@ -9,18 +9,25 @@ class Contact(models.Model):
     username = models.CharField(max_length=30, null=True, blank=True)
     date = models.DateTimeField(auto_now_add=True)
 
+class User(AbstractUser):
+    # id = models.IntegerField(primary_key=True,auto_created=True)
+    introduce = models.TextField(default='hello')
 
 class Theme(models.Model):
-    note_title = models.TextField(null = True,blank = True)
-    introduce =models.TextField(null = True,blank = True)
+    title = models.TextField(null = True,blank = True)
+    introduce = models.TextField(null = True,blank = True)
+    author_id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
-class Sub_Theme(models.Model):
-    sub_title=  models.TextField()
-    main_title = models.ForeignKey(Theme,on_delete = models.CASCADE, null = True,blank = True,related_name = 'sub')
+class Auth(models.Model):
+    authUser = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete = models.CASCADE)
+    authTheme = models.ForeignKey(Theme,on_delete = models.CASCADE)
 
+class SubTheme(models.Model):
+    title=  models.TextField()
+    theme = models.ForeignKey(Theme,on_delete = models.CASCADE, null = True,blank = True,related_name = 'sub')
 
 class Note(models.Model):
-    sub_theme = models.ForeignKey(Sub_Theme,on_delete = models.CASCADE, null = True,blank = True,related_name = 'sub_name')
+    subTheme = models.ForeignKey(SubTheme,on_delete = models.CASCADE, null = True,blank = True,related_name = 'note')
     theme = models.ForeignKey(Theme,on_delete = models.CASCADE, null = True,blank = True,related_name = 'note')
     title = models.TextField()
     text = models.TextField()
@@ -28,9 +35,6 @@ class Note(models.Model):
     code = models.TextField(null = True,blank = True)
 
 
-
-class User(AbstractUser):
-    introduce = models.TextField(default='hello')
 
 
 

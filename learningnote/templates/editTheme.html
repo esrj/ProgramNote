@@ -1,0 +1,426 @@
+{% extends 'note.html' %}
+
+{%block content%}
+<body class="docs sidenav-pinned ready loaded">
+    <div class="container-fluid container-docs">
+        <div class="container">
+             <div style="padding-top: 25px" class="col-xl-12 docs-content pb-5">
+                 <div class="docs-title">
+                     <h1>編輯筆記</h1>
+                     <p class="lead mb-0">主題：<span id="themeTitle">{{theme.title}}</span></p>
+                 </div>
+
+                 <h5 >分享閱讀權限</h5>
+                 <div  class="form-group">
+                     <div class="input-group">
+                         <input id="username" type="text" class="form-control" placeholder="搜尋用戶名" />
+                     </div>
+                     <span id="users"></span>
+                 </div>
+
+                 <table class="table">
+                     <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">擁有閱讀權限的使用者</th>
+                            <th scope="col">移除閱讀權限</th>
+                        </tr>
+                     </thead>
+                     <tbody id="table">
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>{{request.user}}</td>
+                            <td>作者</td>
+                        </tr>
+                     </tbody>
+                 </table>
+
+
+
+                <h5 >標題名稱</h5>
+                <div  class="form-group">
+                    <div class="input-group">
+                        <input id = "title" type="text" class="form-control" placeholder="輸入筆記標題名稱"  value="{{theme.title}}"/>
+                    </div>
+                </div>
+
+                <h5 >主題介紹</h5>
+                <div  class="form-group">
+                    <div class="input-group">
+                        <textarea id = "introduce" type="text" class="form-control" placeholder="輸入筆記標題名稱" aria-label="Recipient's username" aria-describedby="basic-addon2">{{theme.introduce}}</textarea>
+                    </div>
+                </div>
+                <button onclick="editTheme_()" style="float: right;padding: 0.5rem 1.75rem;" type="button" class="btn btn-neutral btn-icon">
+                    <span class="btn-inner--text">確認更改</span>
+                </button>
+                <button  onclick="deleteTheme_()" style="float: right;padding: 0.5rem 1.75rem;margin-right: 5px" type="button" class="btn btn-youtube ">
+                    <span  class="btn-inner--text">刪除</span>
+                </button>
+
+
+
+
+                <h5 style="margin-top: 75px">以下為{{theme.title}}的章節</h5>
+                {% for s in subtheme %}
+                    <div  class="form-group">
+                        <div class="input-group">
+                            <input id="edit_{{s.id}}" type="text" class="form-control" placeholder="輸入筆記標題名稱" value="{{s.title}}">
+                        </div>
+                    </div>
+                    <button onclick="edit_({{s.id}})" style="margin-bottom: 15px;float: right;padding: 0.5rem 1.75rem;" type="button" class="btn btn-neutral bt btn-icon">
+                        <span class="btn-inner--text">確認更改</span>
+                    </button>
+                    <button  onclick="delete_({{s.id}})" style="margin-bottom: 15px;float: right;padding: 0.5rem 1.75rem;margin-right: 5px" type="button" class="btn btn-youtube ">
+                        <span  class="btn-inner--text">刪除</span>
+                    </button>
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.6/axios.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+<script>
+
+    function editTheme_(){
+        const title = $("#title").val().trimEnd().replace('\n','')
+        const introduce = $('#introduce').val()
+        if(title && introduce){
+            axios({
+                url:'/note/editTheme/?id={{theme.id}}',
+                method:"POST",
+                headers:{'X-CSRFToken': "{{ csrf_token }}"},
+                data:{
+                    'title':title,
+                    'introduce':introduce,
+                    'index':1
+                }
+            }).then((res)=>{
+                if(res.data.errno === 0){
+                    swal({
+                        'title':'更改成功',
+                        'text':'   ',
+                        icon:'success',
+                        timer:1500,
+                        buttons:false
+                    })
+                    setTimeout(()=>{
+                        window.location = '/note/editTheme/?id={{theme.id}}'
+                    },1000)
+                }
+                if(res.data.errno === 1){
+                    swal({
+                        'title':'請稍後再試',
+                        'text':'   ',
+                        icon:'error',
+                        timer:1500,
+                        buttons:false
+                    })
+                    setTimeout(()=>{
+                        window.location = '/note/editTheme/?id={{theme.id}}'
+                    },1000)
+                }
+            })
+        }else{
+            swal({
+                'title':'請確認填完表單',
+                'text':'   ',
+                icon:'warning',
+                timer:1000,
+                buttons:false
+            })
+        }
+    }
+    function deleteTheme_(){
+        swal({
+            title:'確定要刪除嗎？',
+            text:'刪除主題會一併刪除底下的章節，一旦刪除便無法復原，若仍要刪除請在輸入匡中輸入 "delete"',
+            icon:'warning',
+            content:'input',
+            buttons: ['取消','確認']
+        }).then(value=> {
+            if (value === 'delete') {
+                axios({
+                    url:'/note/editTheme/?id={{theme.id}}',
+                    method:"POST",
+                    headers:{'X-CSRFToken': "{{ csrf_token }}"},
+                    data:{
+                        'index':2
+                    }
+                }).then((res)=>{
+                    if(res.data.errno === 1){
+                        swal({
+                            'title':'請稍後再試',
+                            'text':'   ',
+                            icon:'error',
+                            timer:1500,
+                            buttons:false
+                        })
+                        setTimeout(()=>{
+                            window.location = '/note/editTheme/?id={{theme.id}}'
+                        },1000)
+                    }else{
+                        swal({
+                            title:'已成功刪除',
+                            text:'正在導回主頁面',
+                            timer:1500,
+                            buttons:false,
+                            icon:'success'
+                        })
+                        setTimeout(()=>{
+                            window.location='/'
+                        },1000)
+                    }
+                })
+            }
+        })
+    }
+    function edit_(id){
+        if($(`#edit_${id}`).val().trimEnd().replace('\n','') === ''){
+            swal({
+                title:'表格不可為空',
+                text:' ',
+                timer:1500,
+                buttons:false,
+                icon:'warning'
+            })
+        }else{
+            axios({
+                url:'/note/editTheme/?id={{theme.id}}',
+                method:"POST",
+                headers:{'X-CSRFToken': "{{ csrf_token }}"},
+                data:{
+                    'index':3,
+                    id:id,
+                    title: $(`#edit_${id}`).val().trimEnd().replace('\n',''),
+                }
+            }).then((res)=>{
+                if(res.data.errno === 1){
+                    swal({
+                        'title':'請稍後再試',
+                        'text':'   ',
+                        icon:'error',
+                        timer:1500,
+                        buttons:false
+                    })
+                    setTimeout(()=>{
+                        window.location = '/note/editTheme/?id={{theme.id}}'
+                    },1000)
+                }else{
+                    swal({
+                        title:'已修改成功',
+                        text:' ',
+                        timer:1500,
+                        buttons:false,
+                        icon:'success'
+                    })
+                    setTimeout(()=>{
+                        window.location='/note/editTheme/?id={{theme.id}}'
+                    },1000)
+                }
+            })
+        }
+    }
+    function delete_(id){
+        swal({
+            title:'確定要刪除嗎？',
+            text:'刪除主題會一併刪除底下的章節，一旦刪除便無法復原，若仍要刪除請在輸入匡中輸入 "delete"',
+            icon:'warning',
+            content:'input',
+            buttons: ['取消','確認']
+        }).then(value=> {
+            if (value === 'delete') {
+                axios({
+                    url:'/note/editTheme/?id={{theme.id}}',
+                    method:"POST",
+                    headers:{'X-CSRFToken': "{{ csrf_token }}"},
+                    data:{
+                        'index':4,
+                        'id':id
+                    }
+                }).then((res)=>{
+                    if(res.data.errno === 1){
+                        swal({
+                            'title':'請稍後再試',
+                            'text':'   ',
+                            icon:'error',
+                            timer:1500,
+                            buttons:false
+                        })
+                        setTimeout(()=>{
+                            window.location = '/note/editTheme/?id={{theme.id}}'
+                        },1000)
+                    }else {
+                        swal({
+                            title:'已成功刪除',
+                            text:' ',
+                            timer:1500,
+                            buttons:false,
+                            icon:'success'
+                        })
+                        setTimeout(()=>{
+                            window.location='/note/editTheme/?id={{theme.id}}'
+                        },1000)
+                    }
+                })
+            }
+        })
+
+    }
+    $('#username').keyup(()=>{
+        if($('#username').val() !== ''){
+            axios({
+                url:'/note/auth/?id={{theme.id}}',
+                method:'POST',
+                headers:{'X-CSRFToken': "{{ csrf_token }}"},
+                data:{
+                    username:$("#username").val(),
+                    index:1,
+                    theme_id:'{{theme.id}}'
+                }
+            }).then(res=>{
+                if(res.data.errno === 1){
+                    swal({
+                        'title':'請稍後再試',
+                        'text':'   ',
+                        icon:'error',
+                        timer:1500,
+                        buttons:false
+                    })
+                    setTimeout(()=>{
+                        window.location = '/note/editTheme/?id={{theme.id}}'
+                    },1000)
+                }else if(res.data.users){
+                    $("#users").empty()
+                    res.data.users.forEach(item=>{
+                        $("#users").append($(`
+                         <div style="margin: 15px">
+                             <a href="#" onclick="addToAuth({{theme.id}},${item.id})">
+                                <h6 style="color: #9290a2"><i class="fa fa-user"></i> ${item.username} <span style="color: #2aa5ff;float: right">分享閱讀權限</span></h6>
+                             </a>
+                         </div>
+                        `))
+                    })
+                }
+            })
+        }
+        $("#users").empty()
+    })
+
+
+    function addToAuth(theme_id,user_id){
+        axios({
+            url:'/note/auth/?id={{theme.id}}',
+            method:'POST',
+            headers:{'X-CSRFToken': "{{ csrf_token }}"},
+            data:{
+                index:2,
+                user_id:user_id,
+                theme_id:theme_id
+            }
+        }).then(res=>{
+            if(res.data.errno === 1){
+                swal({
+                    'title':'請稍後再試',
+                    'text':'   ',
+                    icon:'error',
+                    timer:1500,
+                    buttons:false
+                })
+                setTimeout(()=>{
+                    window.location = '/note/editTheme/?id={{theme.id}}'
+                },1000)
+            }
+            if(res.data.errno === 0){
+                swal({
+                    title:'已新增成功',
+                    text:' ',
+                    timer:1500,
+                    buttons:false,
+                    icon:'success'
+                })
+                setTimeout(()=>{
+                    window.location='/note/editTheme/?id={{theme.id}}'
+                },1000)
+            }
+        })
+    }
+
+    axios({
+        url:'/note/auth/?id={{theme.id}}',
+        method:'POST',
+        headers:{'X-CSRFToken': "{{ csrf_token }}"},
+        data:{
+            index:3,
+            theme_id:'{{theme.id}}'
+        }
+    }).then((res)=>{
+        if(res.data.errno === 1){
+            swal({
+                'title':'請稍後再試',
+                'text':'   ',
+                icon:'error',
+                timer:1500,
+                buttons:false
+            })
+            setTimeout(()=>{
+                window.location = '/note/editTheme/?id={{theme.id}}'
+            },1000)
+        }else if(res.data.auths){
+            res.data.auths.forEach(item=>{
+                $("#table").append($(`
+
+                    <tr>
+                        <th scope="row">2</th>
+                        <td>${item}</td>
+                        <td><a style="color: #718096" href="#" onclick="deleteAuth('${item}')">X</a></td>
+                    </tr>
+                `))
+            })
+        }
+    })
+
+    function deleteAuth(username){
+        axios({
+            url:'/note/auth/?id={{theme.id}}',
+            method: 'POST',
+            headers:{'X-CSRFToken': "{{ csrf_token }}"},
+            data:{
+                'index':4,
+                'theme_id':'{{theme.id}}',
+                'username' : username
+            }
+        }).then(res=>{
+            if(res.data.errno === 1){
+                swal({
+                    'title':'請稍後再試',
+                    'text':'   ',
+                    icon:'error',
+                    timer:1500,
+                    buttons:false
+                })
+                setTimeout(()=>{
+                    window.location = '/note/editTheme/?id={{theme.id}}'
+                },1000)
+            }
+            if(res.data.errno == 0){
+                swal({
+                    title:'已刪除成功',
+                    text:' ',
+                    timer:1500,
+                    buttons:false,
+                    icon:'success'
+                })
+                setTimeout(()=>{
+                    window.location='/note/editTheme/?id={{theme.id}}'
+                },1000)
+            }
+        })
+    }
+
+
+</script>
+
+
+{% endblock %}
