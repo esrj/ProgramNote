@@ -6,35 +6,9 @@
         <div class="container">
              <div style="padding-top: 25px" class="col-xl-12 docs-content pb-5">
                  <div class="docs-title">
-                     <h1>編輯筆記</h1>
+                     <h3>編輯筆記</h3>
                      <p class="lead mb-0">主題：<span id="themeTitle">{{theme.title}}</span></p>
                  </div>
-
-                 <h5 >分享閱讀權限</h5>
-                 <div  class="form-group">
-                     <div class="input-group">
-                         <input id="username" type="text" class="form-control" placeholder="搜尋用戶名" />
-                     </div>
-                     <span id="users"></span>
-                 </div>
-
-                 <table class="table">
-                     <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">擁有閱讀權限的使用者</th>
-                            <th scope="col">移除閱讀權限</th>
-                        </tr>
-                     </thead>
-                     <tbody id="table">
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>{{request.user}}</td>
-                            <td>作者</td>
-                        </tr>
-                     </tbody>
-                 </table>
-
 
 
                 <h5 >標題名稱</h5>
@@ -56,8 +30,6 @@
                 <button  onclick="deleteTheme_()" style="float: right;padding: 0.5rem 1.75rem;margin-right: 5px" type="button" class="btn btn-youtube ">
                     <span  class="btn-inner--text">刪除</span>
                 </button>
-
-
 
 
                 <h5 style="margin-top: 75px">以下為{{theme.title}}的章節</h5>
@@ -267,156 +239,6 @@
             }
         })
 
-    }
-    $('#username').keyup(()=>{
-        if($('#username').val() !== ''){
-            axios({
-                url:'/note/auth/?id={{theme.id}}',
-                method:'POST',
-                headers:{'X-CSRFToken': "{{ csrf_token }}"},
-                data:{
-                    username:$("#username").val(),
-                    index:1,
-                    theme_id:'{{theme.id}}'
-                }
-            }).then(res=>{
-                if(res.data.errno === 1){
-                    swal({
-                        'title':'請稍後再試',
-                        'text':'   ',
-                        icon:'error',
-                        timer:1500,
-                        buttons:false
-                    })
-                    setTimeout(()=>{
-                        window.location = '/note/editTheme/?id={{theme.id}}'
-                    },1000)
-                }else if(res.data.users){
-                    $("#users").empty()
-                    res.data.users.forEach(item=>{
-                        $("#users").append($(`
-                         <div style="margin: 15px">
-                             <a href="#" onclick="addToAuth({{theme.id}},${item.id})">
-                                <h6 style="color: #9290a2"><i class="fa fa-user"></i> ${item.username} <span style="color: #2aa5ff;float: right">分享閱讀權限</span></h6>
-                             </a>
-                         </div>
-                        `))
-                    })
-                }
-            })
-        }
-        $("#users").empty()
-    })
-
-
-    function addToAuth(theme_id,user_id){
-        axios({
-            url:'/note/auth/?id={{theme.id}}',
-            method:'POST',
-            headers:{'X-CSRFToken': "{{ csrf_token }}"},
-            data:{
-                index:2,
-                user_id:user_id,
-                theme_id:theme_id
-            }
-        }).then(res=>{
-            if(res.data.errno === 1){
-                swal({
-                    'title':'請稍後再試',
-                    'text':'   ',
-                    icon:'error',
-                    timer:1500,
-                    buttons:false
-                })
-                setTimeout(()=>{
-                    window.location = '/note/editTheme/?id={{theme.id}}'
-                },1000)
-            }
-            if(res.data.errno === 0){
-                swal({
-                    title:'已新增成功',
-                    text:' ',
-                    timer:1500,
-                    buttons:false,
-                    icon:'success'
-                })
-                setTimeout(()=>{
-                    window.location='/note/editTheme/?id={{theme.id}}'
-                },1000)
-            }
-        })
-    }
-
-    axios({
-        url:'/note/auth/?id={{theme.id}}',
-        method:'POST',
-        headers:{'X-CSRFToken': "{{ csrf_token }}"},
-        data:{
-            index:3,
-            theme_id:'{{theme.id}}'
-        }
-    }).then((res)=>{
-        if(res.data.errno === 1){
-            swal({
-                'title':'請稍後再試',
-                'text':'   ',
-                icon:'error',
-                timer:1500,
-                buttons:false
-            })
-            setTimeout(()=>{
-                window.location = '/note/editTheme/?id={{theme.id}}'
-            },1000)
-        }else if(res.data.auths){
-            res.data.auths.forEach(item=>{
-                $("#table").append($(`
-
-                    <tr>
-                        <th scope="row">2</th>
-                        <td>${item}</td>
-                        <td><a style="color: #718096" href="#" onclick="deleteAuth('${item}')">X</a></td>
-                    </tr>
-                `))
-            })
-        }
-    })
-
-    function deleteAuth(username){
-        axios({
-            url:'/note/auth/?id={{theme.id}}',
-            method: 'POST',
-            headers:{'X-CSRFToken': "{{ csrf_token }}"},
-            data:{
-                'index':4,
-                'theme_id':'{{theme.id}}',
-                'username' : username
-            }
-        }).then(res=>{
-            if(res.data.errno === 1){
-                swal({
-                    'title':'請稍後再試',
-                    'text':'   ',
-                    icon:'error',
-                    timer:1500,
-                    buttons:false
-                })
-                setTimeout(()=>{
-                    window.location = '/note/editTheme/?id={{theme.id}}'
-                },1000)
-            }
-            if(res.data.errno == 0){
-                swal({
-                    title:'已刪除成功',
-                    text:' ',
-                    timer:1500,
-                    buttons:false,
-                    icon:'success'
-                })
-                setTimeout(()=>{
-                    window.location='/note/editTheme/?id={{theme.id}}'
-                },1000)
-            }
-        })
     }
 
 

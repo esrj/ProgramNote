@@ -7,18 +7,15 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 import os
 from django.contrib.auth.decorators import login_required
-from .models import Theme,User,Contact,Auth
+from .models import Theme,User,Contact
 
 def main(request):
     if request.method == 'POST':
         if request.user.is_authenticated == False:
             return HttpResponse()
         themes= Theme.objects.filter(author_id = request.user).all().values("title")
-        auth = Auth.objects.filter(authUser = request.user).all()
-        auth = list(map(lambda a:{'title':a.authTheme.title,'id':a.authTheme.id},auth))
-        print(auth)
-        return JsonResponse({'data':list(themes),'authData':auth})
-    else:
+        return JsonResponse({'data':list(themes)})
+    if request.method == 'GET':
         return render(request, 'index.html')
 
 @csrf_exempt
@@ -40,7 +37,6 @@ def uniqueUser(request):
     username = req['username']
     user = User.objects.filter(username = username).first()
     if user != None:
-        print('重複')
         return JsonResponse({"isUnique":False})
     else:
         return JsonResponse({'isUnique':True})

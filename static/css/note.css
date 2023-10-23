@@ -1,0 +1,122 @@
+
+.fa-angle-right {
+    font-weight: 900;
+    margin-top: -3px;
+    color: #a1afc1;
+}
+.fa, .fas {
+    font-weight: 500;
+}
+.btn-titleForm{
+    height: 32.5px;
+    border-color: #ced4da;
+    color: #ced4da;
+    border-radius: 0 10px 10px 0;
+    border-left: 0;
+    border-width: 0.5px;
+    padding: 12px;
+}
+            .btn-clipboard_ {
+                font-size: .875rem;
+                font-weight: bold;
+                position: absolute;
+                z-index: 10;
+                top: 1px;
+                right: 1px;
+                display: block;
+                padding: 0.25rem 0.5rem;
+                cursor: pointer;
+                color: #273444;
+                border: 0;
+                border-bottom: 1px solid #e2e8f0;
+                border-left: 1px solid #e2e8f0;
+                border-radius: 0 0 0 4px;
+                background-color: #fff;
+            }
+            .lead {
+                font-size: 1.25rem!important;
+                font-weight: 300;
+            }
+            @media (max-width: 1440px) {
+                .lead {
+                    font-size: 1.2rem!important;
+                    font-weight: 300;
+                }
+            }@media (max-width: 991px) {
+                .lead {
+                    font-size: 1.15rem!important;
+                    font-weight: 300;
+                }
+            }@media (max-width: 576px) {
+                .lead {
+                    font-size: 1.125rem!important;
+                    font-weight: 300;
+                }
+                /*.docs-content .highlight {*/
+                /*     margin: 0px;*/
+                /*}*/
+            }@media (max-width: 500px) {
+                .lead {
+                    font-size: 1.05rem!important;
+                    font-weight: 300;
+                }
+            }
+            @keyframes hidePreloader {
+                0% {
+                    width: 100%;
+                    height: 100%;
+                }
+                100% {
+                    width: 0;
+                    height: 0;
+                }
+            }
+            body > div.preloader {
+                position: fixed;
+                background: #fff;
+                width: 100%;
+                height: 100%;
+                z-index: 1071;
+                opacity: 0;
+                transition: opacity 0.5s ease;
+                overflow: hidden;
+                pointer-events: none;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            body:not(.loaded) > div.preloader {
+                opacity: 1;
+            }
+            body:not(.loaded) {
+                overflow: hidden;
+            }
+            body.loaded > div.preloader {
+                animation: hidePreloader 0.5s linear 0.5s forwards;
+            }
+
+.btn-primary {
+            color: #fff;
+            background-color: #008aff !important;
+            border-color: #008aff !important
+        }
+        .btn-secondary {
+            color: #000 !important;
+            background-color: #fcfdfe !important;
+            border-color: #6c757d !important;
+        }
+        .docs .docs-title {
+            padding: 2.5rem;
+            margin: 2.5rem 0;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.25rem;
+        }
+        .highlight{
+            background-color: #f7f6f3;
+        }
+        .hljs {
+            display: block;
+            overflow-x: auto;
+            padding: 0.5em;
+            color: #d63384;
+        }

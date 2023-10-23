@@ -3,9 +3,9 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no" />
-        <meta name="description" content="文宏程式學院 學習筆記，內容包括，網頁爬蟲、網頁設計、line bot 應用、以及網路安全等學習筆記" />
-        <meta name="author" content="文宏" />
-        <title>文宏學習筆記</title>
+        <meta name="description" content="文宏開發者討論社群" />
+        <meta name="author" content="李紹宏(文宏)" />
+        <title>文宏開發者討論社群</title>
         <style>
             .hide_btn{
                 display: none !important;
@@ -93,16 +93,7 @@
         <div class="preloader">
             <div class="spinner-border text-primary" role="status"><span class="sr-only">Loading...</span></div>
         </div>
-        <div class="modal fade" tabindex="-1" role="dialog" id="modal-cookies" data-backdrop="false" aria-labelledby="modal-cookies" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-aside left-4 right-4 bottom-4">
-                <div class="modal-content bg-dark-dark">
-                    <div class="modal-body">
-                        <p class="text-sm text-white mb-3">We use cookies so that our themes work for you. By using our website, you agree to our use of cookies.</p>
-                        <a href="javascript:;" class="btn btn-sm btn-white" target="_blank">Learn more</a> <button type="button" class="btn btn-sm btn-primary mr-2" data-dismiss="modal">OK</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+
         <nav class="navbar navbar-expand-lg navbar-light bg-white">
             <div class="container">
                 <a class="navbar-brand" href="/"><img alt="Image placeholder" src="/static/picture/dark.svg" id="navbar-logo" /> </a>
@@ -113,26 +104,20 @@
                     <ul class="navbar-nav mt-4 mt-lg-0 ml-auto">
                         {% if user.is_authenticated %}
                         <li class="nav-item">
-                            <a style="color: #838fa1" class="nav-link" href="/">首頁</a>
+                            <a style="color: #838fa1;font-weight: 500" class="nav-link" href="/">首頁</a>
                         </li>
                         <li class="nav-item dropdown dropdown-animate" data-toggle="hover">
-                            <a style="color: #838fa1" class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">我的筆記</a>
+                            <a style="color: #838fa1;font-weight: 500" class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">我的筆記</a>
                             <div style="padding: 0.25rem 1.75rem;" class="dropdown-menu dropdown-menu-single" >
                                 <span id = "load_data"></span>
                             </div>
                         </li>
-                        <li class="nav-item dropdown dropdown-animate" data-toggle="hover">
-                            <a style="color: #838fa1" class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">共用筆記</a>
-                            <div style="padding: 0.25rem 1.75rem;" class="dropdown-menu dropdown-menu-single" >
-                                <span id = "load_authData"></span>
-                            </div>
-                        </li>
                         <li class="hide_btn nav-item ">
-                            <a style="font-weight: 600;color: #838fa1" class="nav-link"  href="{% url 'account_logout' %}" >登出</a>
+                            <a style="font-weight: 500;color: #838fa1" class="nav-link"  href="{% url 'account_logout' %}" >登出</a>
                         </li>
                         {% else %}
                         <li class="hide_btn nav-item ">
-                            <a style="font-weight: 600;color: #838fa1" class="nav-link"  href="/accounts/login" >登入 / 註冊</a>
+                            <a style="font-weight: 500;color: #838fa1" class="nav-link"  href="/accounts/login" >登入 / 註冊</a>
                         </li>
                         {% endif %}
 
@@ -162,13 +147,13 @@
                     </div>
                     <div class="col-12 col-md-7 col-lg-6 order-md-1 pr-md-5">
                         <h1 class="display-4 text-center text-md-left mb-3">文宏程式學院 <strong class="text-primary">學習筆記</strong></h1>
-                        <p class="lead text-center text-md-left text-muted">內容包括，網頁爬蟲、網頁設計、line bot 應用、以及網路安全等學習筆記</p>
+                        <p style="font-weight: 350;color: #a6b0bb !important;" class="lead text-center text-md-left text-muted">文宏筆記網站是一個開發者討論社群，提供開發者分享原始碼與開發日誌，以及個人或小組筆記託管</p>
                         <div class="text-center text-md-left mt-5">
-                            <a style="height: 40px;display: inline" href="http://wenhong.online/" class="btn btn-primary btn-icon" >
-                                <span class="btn-inner--text">查看官網</span> <span class="btn-inner--icon"><i data-feather="chevron-right"></i></span>
+                            <a style="padding: 10px 15px;display: inline" href="#" class="btn btn-primary btn-icon" >
+                                <span class="btn-inner--text">使用手冊</span> <span class="btn-inner--icon"><i data-feather="chevron-right"></i></span>
                             </a>
-                            <a style="height: 40px;display: inline" href="#" class="btn btn-neutral" >
-                                <span class="btn-inner--text">馬上開始</span> <span class="btn-inner--icon"></span>
+                            <a style="padding: 10px 15px;display: inline;border: 1.5px solid #e2e8f0;" href="/community" class="btn btn-neutral" >
+                                <span class="btn-inner--text">造訪社群</span> <span class="btn-inner--icon"></span>
                             </a>
                         </div>
                     </div>
@@ -200,7 +185,7 @@
                             <div class="mt-4 mb-6">
                                 <h2 class="h1 " style="color: #3f3a64">面對時代的潮流，堅定信心</h2>
                                 <h5 style="margin: 18px" class=" mt-3">一起踏上成為 IT 人之路</h5>
-<!--                                <a  href="/note/page/?theme=python%網路爬蟲" class="btn btn-neutral btn-icon d-none d-lg-inline-block" target="_blank">馬上開始</a>-->
+                                <a href="http://wenhong.online/" class="btn btn-neutral btn-icon d-none d-lg-inline-block" style="padding: 10px 15px; border: 1.5px solid #e2e8f0;" target="_blank">造訪官網</a>
                             </div>
                         </div>
                     </div>
@@ -289,17 +274,13 @@
         <script src="/static/js/quick-website.js"></script>
         <script>
             feather.replace({ width: "1em", height: "1em" });
-        </script>
-        <script>
+
             !(function (e, t, a, n, g) {
                 (e[n] = e[n] || []), e[n].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
                 var m = t.getElementsByTagName(a)[0],
                     r = t.createElement(a);
                 (r.async = !0), (r.src = "static/js/gtm.js"), m.parentNode.insertBefore(r, m);
             })(window, document, "script", "dataLayer");
-        </script>
-        <script>
-
 
             axios({
                 url:'/',
@@ -321,24 +302,8 @@
                         <a  href="/note/page/" class="dropdown-item">創建你的筆記</a>
                     `))
                 }
-
-                authThemes = res.data.authData
-                if(authThemes.length !== 0){
-
-                    authThemes.forEach((item)=>{
-                         console.log(item)
-                        $('#load_authData').append($(`
-                            <a  href="/note/authPage?theme=${item.id}" class="dropdown-item">${item.title}</a>
-                        `))
-                    })
-                }else{
-                    $('#load_authData').append($(`
-                        <a  href="#" class="dropdown-item">目前沒有共用筆記</a>
-                    `))
-                }
             })
-        </script>
-        <script>
+
             function send(){
                 if($('#name').val()&&$('#email').val()&&$('#content').val()){
                     axios.post('/',{

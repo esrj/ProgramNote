@@ -3,92 +3,9 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no" />
-        <meta name="description" content="文宏程式學院 學習筆記，內容包括，網頁爬蟲、網頁設計、line bot 應用、以及網路安全等學習筆記" />
-        <meta name="author" content="Webpixels" />
+        <meta name="description" content="文宏程式學院 學習筆記，提開發者免費筆記託管" />
+        <meta name="author" content="李紹宏(文宏)" />
         <title>文宏學習筆記</title>
-        <style>
-            /*.edit_btn: hover{*/
-            /*    */
-            /*}*/
-            .btn-clipboard_ {
-                font-size: .875rem;
-                font-weight: bold;
-                position: absolute;
-                z-index: 10;
-                top: 1px;
-                right: 1px;
-                display: block;
-                padding: 0.25rem 0.5rem;
-                cursor: pointer;
-                color: #273444;
-                border: 0;
-                border-bottom: 1px solid #e2e8f0;
-                border-left: 1px solid #e2e8f0;
-                border-radius: 0 0 0 4px;
-                background-color: #fff;
-            }
-            .lead {
-                font-size: 1.25rem!important;
-                font-weight: 300;
-            }
-            @media (max-width: 1440px) {
-                .lead {
-                    font-size: 1.2rem!important;
-                    font-weight: 300;
-                }
-            }@media (max-width: 991px) {
-                .lead {
-                    font-size: 1.15rem!important;
-                    font-weight: 300;
-                }
-            }@media (max-width: 576px) {
-                .lead {
-                    font-size: 1.125rem!important;
-                    font-weight: 300;
-                }
-                /*.docs-content .highlight {*/
-                /*     margin: 0px;*/
-                /*}*/
-            }@media (max-width: 500px) {
-                .lead {
-                    font-size: 1.05rem!important;
-                    font-weight: 300;
-                }
-            }
-            @keyframes hidePreloader {
-                0% {
-                    width: 100%;
-                    height: 100%;
-                }
-                100% {
-                    width: 0;
-                    height: 0;
-                }
-            }
-            body > div.preloader {
-                position: fixed;
-                background: #fff;
-                width: 100%;
-                height: 100%;
-                z-index: 1071;
-                opacity: 0;
-                transition: opacity 0.5s ease;
-                overflow: hidden;
-                pointer-events: none;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-            body:not(.loaded) > div.preloader {
-                opacity: 1;
-            }
-            body:not(.loaded) {
-                overflow: hidden;
-            }
-            body.loaded > div.preloader {
-                animation: hidePreloader 0.5s linear 0.5s forwards;
-            }
-        </style>
         <script>
             window.addEventListener("load", function () {
                 setTimeout(function () {
@@ -100,55 +17,35 @@
         <link rel="stylesheet" href="/static/css/all.min.css" />
         <link rel="stylesheet" href="/static/css/quick-website.css" />
         <link rel="stylesheet" href="/static/css/docs.css" />
-        <script src="/static/js/jquery.min.js"></script>
-        <script src="/static/js/bootstrap.bundle.min.js"></script>
-        <script src="/static/js/svg-injector.min.js"></script>
-        <script src="/static/js/feather.min.js"></script>
-        <script src="/static/js/highlight.min.js"></script>
-        <script src="/static/js/clipboard.min.js"></script>
-        <script src="/static/js/quick-website.js"></script>
+        <link rel="stylesheet" href="/static/css/note.css">
     </head>
+
     <body class="docs">
         <div class="preloader">
             <div class="spinner-border text-primary" role="status"><span class="sr-only">Loading...</span></div>
         </div>
         <header class="header" id="header-main">
             <nav class="navbar navbar-main navbar-expand-lg fixed-top navbar-shadow navbar-light bg-white border-bottom" id="navbar-main">
-                <div class="container">
-                    <div style="padding-left: 0px;padding-right: 0px "class="container-fluid justify-content-between">
-                        <div class="navbar-user d-lg-none">
-                            <ul class="navbar-nav flex-row align-items-center">
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link nav-link-icon sidenav-toggler" data-action="sidenav-pin" data-target="#sidenav-main"><i data-feather="menu"></i></a>
-                                </li>
-                            </ul>
-                        </div>
-                        <a href="/" class="navbar-brand" >
+                 </div>
+                        <a style="margin-left: 50px;" href="/" class="navbar-brand" >
                             <img alt="Image placeholder" src="/static/picture/dark.svg" id="navbar-logo" />
                         </a>
                         <div class="collapse navbar-collapse" id="navbar-main-collapse">
                             <ul style="margin-right: 10px !important;" class="navbar-nav align-items-center mx-auto">
                                 <li class="nav-item ">
-                                    <a style="font-weight: 600;color: #838fa1;padding-left: 16px;padding-right: 16px" class="nav-link " href="/">首頁</a>
+                                    <a style="font-weight: 500;color: #838fa1;padding-left: 16px;padding-right: 16px" class="nav-link " href="/">首頁</a>
                                 </li>
                                 <li class="nav-item dropdown dropdown-animate" data-toggle="hover">
-                                    <a style="font-weight: 600;color: #838fa1;padding-left: 16px;padding-right: 16px" class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">學習筆記</a>
+                                    <a style="font-weight: 500;color: #838fa1;padding-left: 16px;padding-right: 16px" class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">學習筆記</a>
                                     <div style="padding: 0.25rem 1.75rem;"  class="dropdown-menu dropdown-menu-single" >
                                         <span id = "load_data"></span>
                                     </div>
                                 </li>
-                                <li class="nav-item dropdown dropdown-animate" data-toggle="hover">
-                                    <a style="font-weight: 600;color: #838fa1" class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">共用筆記</a>
-                                    <div style="padding: 0.25rem 1.75rem;" class="dropdown-menu dropdown-menu-single" >
-                                        <span id = "load_authData"></span>
-                                    </div>
-                                </li>
-
                             </ul>
                         </div>
                         {% if user.is_authenticated %}
-                            <li class="nav-item dropdown dropdown-animate" data-toggle="hover">
-                                <a style="font-weight: 700;padding: 8px 20px;border-radius: 0.375rem;background-color: #008aff;"  class="navbar-btn btn btn-sm btn-primary d-none d-lg-inline-block ml-3" href="#"><i class="fa fa-user"> </i> {{request.user.username}}</a>
+                            <li style="margin-right: 50px;" class="nav-item dropdown dropdown-animate" data-toggle="hover">
+                                <a style="border-color: #008aff;padding: 6px 20px;border-radius: 0.375rem;background-color: #008aff;"  class="navbar-btn btn btn-sm btn-primary d-none d-lg-inline-block ml-3" href="#"><i class="fa fa-user"> </i> {{request.user.username}}</a>
                                 <div style="padding: 8px 20px;" class="dropdown-menu dropdown-menu-single" >
                                     <a  href="{% url 'account_logout' %}" class="dropdown-item">登出</a>
                                 </div>
@@ -159,8 +56,9 @@
             </nav>
 
         </header>
-        {% block content %}
+    {% block content %}
         <!--  navbar 結束     -->
+
         <!--  側邊欄加載入  -->
         <div class="container-fluid container-docs">
             <nav class="sidenav navbar navbar-vertical navbar-expand-xs navbar-light bg-white" id="sidenav-main">
@@ -168,44 +66,207 @@
                     <div class="docs-sidebar pt-6 pt-lg-7">
                         <span id ="side_bar">
                         </span>
-                        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-                        <div style="margin-top: 15px" class="input-group mb-3">
-                            <input id="subTheme" style="height: 32.5px" type="text" class="form-control" placeholder="新增章節">
-                            <button style="height: 32.5px;border-color: #ced4da;color: #ced4da" class="btn btn-outline-secondary" type="button" onclick="createSubTheme()">
-                                <i style="display: block;" class="fa fa-angle-right"></i>
-                            </button>
+
+                        <div id="createTitle" style="margin-top: 15px" class="input-group mb-3">
+                            <a href="#" onclick="callOutCreateTitleForm()" style="color: #acaeb0;display: flex;text-decoration: none">
+                                點擊新增章節
+                            </a>
                         </div>
                     </div>
                 </div>
             </nav>
         </div>
+
+        {% if createTheme == True %}
+
+
+
+
+        <div class="main-content row position-relative pb-5">
+            <div class="col-xl-11 docs-content pb-5 padding-width">
+                <div style="margin-top: 50px">
+
+
+
+                    <div class="col-xl-12 docs-content pb-5 padding-width">
+                        <div class="docs-title" >
+                        <h3 contenteditable="true" style="font-weight: 400" id = "themeTitle">點擊編輯文章標題</h3>
+                        <p contenteditable="true" class="lead" style="margin-bottom: 8px" id = "themeIntroduce">點擊編輯文章介紹</p>
+                    </div>
+
+                    <button onclick="createTheme()" style="float: right;padding: 0.5rem 1.75rem" type="button" class="btn btn-secondary btn-icon">
+                        <span class="btn-inner--text">新增</span>
+                    </button>
+
+
+
+                </div>
+
+
+
+
+
+            </div>
+        </div>
+        {% else %}
         <div class="main-content row position-relative pb-5">
             <div class="col-xl-11 docs-content pb-5 padding-width">
                 <div class="docs-title" >
-                    <h1  >{{theme.title}}</h1>
-                    <h5 >章節：{{subThemeObj.title}}</h5>
-                    <p class="lead mb-0">{{theme.introduce}}</p>
-                    <div class="mt-4">
-                        <a style="text-decoration: none;" href="/note/editTheme/?id={{theme.id}}" ><i class="fa fa-edit"> </i>  編輯主題</a>
-                    </div>
+                    <h3 style="font-weight: 400">{{theme.title}}</h3>
+                    <p class="lead" style="font-weight: 400;color:#162c5b;margin-bottom: 8px">章節：{{subThemeObj.title}}</p>
+                    <p class="lead" style="margin-bottom: 8px">{{theme.introduce}}</p>
+                    <a style="text-decoration: none;" href="/note/editTheme/?id={{theme.id}}" ><i class="fa fa-edit"> </i>  編輯主題</a>
                 </div>
                 <span id="datas">
 
                 </span>
-                <a style="text-decoration: none;" href="/note/createNote/?theme={{theme.title}}&page={{subThemeObj.title}}">
-                    <h6 style="margin: 30px;color: #acaeb0;display: flex;justify-content: center;">
+
+                <span id="multiForm">
+                    <a  style="text-decoration: none;" href="#" onclick="callOutMultiForm()">
+                        <h6 onclick="callOutMultiForm()" style="margin: 30px;color: #acaeb0;font-weight: 400;display: flex;justify-content: center;">
+                            點擊新增子標題
+                        </h6>
+                    </a>
+                </span>
+
+            </div>
+        </div>
+        {% endif %}
+
+    {% endblock %}
+
+    <script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.4/axios.min.js" integrity="sha512-LUKzDoJKOLqnxGWWIBM4lzRBlxcva2ZTztO8bTcWPmDSpkErWx0bSP4pdsjNH8kiHAUPaT06UXcb+vOEZH+HpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        function createTheme(){
+            console.log($('#themeTitle').text())
+            let title = $('#themeTitle').text().trimEnd().replace('\n','')
+            axios({
+                url:'/note/createTheme/',
+                method:'POST',
+                data:{
+                    'title':title,
+                    'introduce':$("#themeIntroduce").text(),
+                    'X-CSRFToken': "{{ csrf_token }}"
+                },
+                headers:{'X-CSRFToken': "{{ csrf_token }}"}
+            }).then((res)=>{
+                if(res.data.errno === 1){
+                    swal({
+                        'title':'主題標題名稱為必填',
+                        'icon':'info',
+                        'text':'  ',
+                        'button': false,
+                        'timer': 1000
+                    })
+                }else{
+                    window.location = `/note/page/?theme=${title}`
+                }
+            })
+        }
+
+        function callOutMultiForm(){
+            $('#multiForm').empty()
+            $('#multiForm').append($(`
+                <h5 contenteditable="true" style="margin-top: 15px" id = "title">點擊編輯筆記標題</h5>
+                <p contenteditable="true" id = "text">點擊編輯說明內容... </p>
+
+                <h5 >程式碼</h5>
+
+                <figure style="margin-left:0  ;  border: 0;" class="highlight hljs python" >
+                    <code  class="language-python hljs python" data-lang="python" style="line-height: 2.2;border: 10px">
+                        <span contenteditable="true" id="code" style="white-space:pre-wrap">// write down your code here</span>
+                    </code>
+                </figure>
+
+                <button onclick="new_()" style="float: right;padding: 0.5rem 1.75rem;" type="button" class="btn btn-primary btn-icon">
+                    <span class="btn-inner--text">新增</span>
+                </button>
+                <button  onclick="cancelMultiForm()" style="float: right;padding: 0.5rem 1.75rem;margin-right: 5px" type="button" class="btn btn-secondary btn-icon">
+                    <span  class="btn-inner--text">取消</span>
+                </button>
+            `))
+        }
+
+        function cancelMultiForm(){
+            $('#multiForm').empty()
+            $("#multiForm").append($(`
+                <a  style="text-decoration: none;" href="#" onclick="callOutMultiForm()">
+                    <h6 onclick="callOutMultiForm()" style="margin: 30px;color: #acaeb0;display: flex;justify-content: center;">
                         <i style="margin: 2px;margin-right: 5px" class="fa fa-plus"> </i> 新增子標題
                     </h6>
                 </a>
-            </div>
-        </div>
+            `))
+        }
 
-        {% endblock %}
+        function new_(){
 
-        <script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.4/axios.min.js" integrity="sha512-LUKzDoJKOLqnxGWWIBM4lzRBlxcva2ZTztO8bTcWPmDSpkErWx0bSP4pdsjNH8kiHAUPaT06UXcb+vOEZH+HpQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        <script>
+            console.log($('#code').text())
+            console.log("hello")
+            if($('#title').text().trimEnd().replace('\n','')===''){
+                swal({
+                    'title':'標題為必填',
+                    'icon':'info',
+                    'text':'  ',
+                    'button': false,
+                    'timer': 1500
+                })
+            }else{
+                let urlParams = new URLSearchParams(window.location.search);
+                url = `/note/createNote/?theme=${urlParams.get('theme')}&page=${urlParams.get('page')}`
+                axios({
+                    url:url,
+                    method:'POST',
+                    data:{
+                        'title':$('#title').text().trimEnd().replace('\n',''),
+                        'text':$('#text').text(),
+                        'code':$('#code').text()
+                    },
+                    headers:{'X-CSRFToken': "{{ csrf_token }}"}
+                }).then((res)=>{
+                    if(res.data.errno === 1){
+                        swal({
+                            'title':'請先建立章節',
+                            'icon':'info',
+                            'text':'正在跳轉至筆記頁面',
+                            'button': false,
+                            'timer': 1500
+                        })
+                    }else if (res.data.errno === 2) {
+                        swal({
+                            'title':'標題為必填',
+                            'icon':'info',
+                            'text':'正在跳轉至筆記頁面',
+                            'button': false,
+                            'timer': 1500
+                        })
+                    }
+                    else{
+                         swal({
+                            'title':'新增成功',
+                            'icon':'success',
+                            'text':'正在跳轉至筆記頁面',
+                            'button': false,
+                            'timer': 1500
+                        })
+                    }
+                    setTimeout(()=>{
+                        window.location = `/note/page/?theme=${urlParams.get('theme')}&page={{sub}}`
+                    },1500)
+                })
+            }
+        }
+
+        function callOutCreateTitleForm(){
+            $("#createTitle").empty()
+            $("#createTitle").append($(`
+                <input id="subTheme" style="height: 32.5px;border: 0.5px solid #ced4da;" type="text" class="form-control" placeholder="新增">
+                <button style="padding-top: 5.5px;" class="btn btn-outline-secondary btn-titleForm" type="button" onclick="createSubTheme()">
+                    <i style="font-weight: 900;margin-bottom: 10px!important;" class="fa fa-angle-double-right"></i>
+                </button>
+            `))
+        }
 
         function createSubTheme()  {
             let newSubThemeStr = $('#subTheme').val()
@@ -222,7 +283,14 @@
             }).then((res)=>{
                 if(res.data.errno === 1){
                     swal({
-                        'title':'此標題已存在',
+                        'title':'在同一個主題中已經此存在此標題',
+                        'text':' ',
+                        'icon':'warning',
+                        'buttons':['確認']
+                    })
+                }else if(res.data.errno === 2){
+                    swal({
+                        'title':'標題不可為空白',
                         'text':' ',
                         'icon':'warning',
                         'buttons':['確認']
@@ -238,32 +306,38 @@
                     $(`#side_bar`).append($(`
                         <h6  class="mt-4"><a style="text-decoration: none;" href="/note/page/?theme={{theme.title}}&page=${newSubThemeStr}">${newSubThemeStr}</a></h6>
                     `))
+                    $("#createTitle").empty()
+                    $("#createTitle").append(`
+                        <a href="#" onclick="callOutCreateTitleForm()" style="color: #acaeb0;display: flex;text-decoration: none">
+                            點擊新增章節
+                        </a>
+                    `)
                 }
             })
         }
 
-
         var idDict = {}
-
         url = location.href
         var request_string = url.split('?')[1]
         axios.post(`/note/page/?${request_string}`).then(res=>{
             //側邊欄加載
             sideBar = res.data.sideBar
+
+            console.log(sideBar)
             sideBar.forEach((item)=>{
                 if(item.noteTitle){
                     $(`#side_bar`).append($(`
-                        <ul class="nav flex-column" id = "${item.noteTitle.replace(" ","").replace('=','').replace('.','')}">
-                             <li class="nav-item"><a style="color: #23417d" href="#${item.noteTitle}" class="nav-link">${item.noteTitle}</a></li>
+                        <ul class="nav flex-column" >
+                             <li class="nav-item"><a style="color: #23417d" href="/note/page/?theme={{theme.title}}&page=${item.subTitle}#note-title-${item.id}" class="nav-link">${item.noteTitle}</a></li>
                         </ul>
                     `))
                 }else if(item.mainTitle){
                     $(`#side_bar`).append($(`
-                        <h5  class="mt-4"><a style="text-decoration: none;" href="#" onclick="js_goTop()">${item.mainTitle}</a></h5>
+                        <h5  class="mt-4"><a style="text-decoration: none;font-weight: 400" href="#" onclick="js_goTop()">${item.mainTitle}</a></h5>
                     `))
                 }else if(item.subTitle){
                     $(`#side_bar`).append($(`
-                        <h6  class="mt-4"><a style="text-decoration: none;" href="/note/page/?theme={{theme.title}}&page=${item.subTitle}">${item.subTitle}</a></h6>
+                        <h6  class="mt-4"><a style="text-decoration: none;font-weight: 400" href="/note/page/?theme={{theme.title}}&page=${item.subTitle}">${item.subTitle}</a></h6>
                     `))
                 }
             })
@@ -271,30 +345,148 @@
             notes = res.data.notes
             notes.forEach(item=>{
                 idDict[item.id]=item.code
-                $('#datas').append($(`
-                    <div style="display: flex; align-items: center;">
-                        <h3 style="margin-top: 10px" id="${item.title.replace(' ','')}">${item.title}  </h3>
-                        <a style="text-decoration: none;margin:13px;margin-bottom: 10px;color: #abaeb0"  href = "/note/edit/?theme={{theme.title}}&page={{subThemeObj.title}}&id=${item.id}"><i class="fa fa-edit"> </i> 編輯</a>
-                    </div>
-                    <p class="lead mb-0" style="white-space:pre-wrap">${item.text}</p>
-                    <div class="docs-example ">
-                        <div class="position-relative fade mt-3 collapse show" >
-                            <button onclick="copy_(${item.id})" style="z-index: 100;" class="action-item btn-clipboard" data-original-title="Copy to clipboard">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox = "0 0 24 24" fill="none" stroke = "currentColor" stroke-width = "2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-copy">
-                                    <rect  x="9" y="9" width ="13" height = "13" rx ="2" ry="2"></rect>
-                                    <path  d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
-                                </svg>
-                            </button>
-                            <figure style="margin-left:0" class="highlight hljs python" >
-                                <code  class="language-python hljs python" data-lang="python" style="line-height: 2.2;border: 10px">
-                                    <span style="white-space:pre-wrap">${item.code}</span>
-                                </code>
-                            </figure>
+                if (item.code.trimEnd().replace('\n','').replace(' ','') === ''){
+                    $('#datas').append($(`
+                        <span id="notion-${item.id}">
+                            <div style="display: flex; align-items: center;">
+                                <h3  style="margin-top: 10px;font-weight: 400;" id="note-title-${item.id}">${item.title}  </h3>
+                                <span id="edit-${item.id}">
+                                    <a style="text-decoration: none;margin:13px;margin-bottom: 10px;color: #abaeb0"  href="#" onclick= "editMode(${item.id})">
+                                        <i class="fa fa-edit"> </i> 編輯
+                                    </a>
+                                </span>
+                            </div>
+                            <p id="note-text-${item.id}" class="lead mb-0" style="white-space:pre-wrap">${item.text}</p>
+                        </span>
+                    `))
+                }else{
+                    $('#datas').append($(`
+                    <span id="notion-${item.id}">
+                        <div style="display: flex; align-items: center;">
+                            <h3  style="margin-top: 10px;font-weight: 400;" id="note-title-${item.id}">${item.title}  </h3>
+                            <span id="edit-${item.id}">
+                                <a style="text-decoration: none;margin:13px;margin-bottom: 10px;color: #abaeb0"  href="#" onclick= "editMode(${item.id})">
+                                    <i class="fa fa-edit"> </i> 編輯
+                                </a>
+                            </span>
+
                         </div>
-                    </div>
+                        <p id="note-text-${item.id}" class="lead mb-0" style="white-space:pre-wrap">${item.text}</p>
+                        <div class="docs-example ">
+                            <div class="position-relative fade mt-3 collapse show" >
+                                <button onclick="copy_(${item.id})" style="z-index: 100;" class="action-item btn-clipboard" data-original-title="Copy to clipboard">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox = "0 0 24 24" fill="none" stroke = "currentColor" stroke-width = "2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-copy">
+                                        <rect  x="9" y="9" width ="13" height = "13" rx ="2" ry="2"></rect>
+                                        <path  d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                    </svg>
+                                </button>
+                                <figure style="margin-left:0  ;  border: 0;" class="highlight hljs python" >
+                                    <code  class="language-python hljs python" data-lang="python" style="line-height: 2.2;border: 10px">
+                                        <span id="note-code-${item.id}" style="white-space:pre-wrap">${item.code}</span>
+                                    </code>
+                                </figure>
+                            </div>
+                        </div>
+                    </span>
                 `))
+                }
             })
         })
+
+        function editMode(id){
+            $(`#note-title-${id}`).attr("contenteditable", true)
+            $(`#note-text-${id}`).attr("contenteditable", true)
+            $(`#note-code-${id}`).attr("contenteditable", true)
+            $(`#edit-${id}`).empty()
+            $(`#edit-${id}`).append($(`
+                <a style="text-decoration: none;margin:25px;margin-bottom: 10px;margin-right: 10px;color: #abaeb0"  href="#" onclick= "delete_(${id})">
+                    <i style="font-weight: 900;" class="fa fa-trash"> </i> 刪除
+                </a>
+                <a style="text-decoration: none;margin:0px;margin-bottom: 10px;color: #abaeb0"  href="#" onclick= "complete_(${id})">
+                    <i class="fa fa-save"> </i> 儲存
+                </a>
+            `))
+        }
+
+        function delete_(id){
+            let urlParams = new URLSearchParams(window.location.search);
+            swal({
+                title:'確定要刪除嗎？',
+                text:'一旦刪除便無法復原',
+                icon:'warning',
+                buttons: ['取消','確認']
+            }).then((feedback)=>{
+                if(feedback ===true) {
+                    axios({
+                        url: '/note/edit/',
+                        method: 'POST',
+                        data: {
+                            'id':id,
+                            "action":'delete',
+                            "theme": urlParams.get('theme'),
+                        },
+                        headers: {'X-CSRFToken': "{{ csrf_token }}"}
+                    }).then((res) => {
+                        if(res.data.errno === 0){
+                            $(`#notion-${id}`).empty()
+                        }else{
+                            swal({
+                                title:'很抱歉，系統出錯',
+                                text:'請聯繫開發人員或稍後再試',
+                                icon:'warning',
+                                buttons: false
+                            })
+                        }
+                    })
+                }
+            })
+        }
+
+        function complete_(id){
+            let urlParams = new URLSearchParams(window.location.search);
+            console.log(id)
+            if($(`#note-title-${id}`).text().trimEnd().replace('\n','') === ''){
+                swal({
+                    title:'標題為必填',
+                    text:' ',
+                    icon:'warning',
+                    buttons: false
+                })
+            }else {
+                axios({
+                    url: '/note/edit/',
+                    method: 'POST',
+                    data: {
+                        'id': id,
+                        'title': $(`#note-title-${id}`).text().trimEnd().replace('\n', ''),
+                        'text': $(`#note-text-${id}`).text(),
+                        'code': $(`#note-code-${id}`).text(),
+                        "action": 'edit',
+                        "theme": urlParams.get('theme'),
+                    },
+                    headers: {'X-CSRFToken': "{{ csrf_token }}"}
+                }).then(res => {
+                    if (res.data.errno === 0) {
+                        $(`#note-title-${id}`).attr("contenteditable", false)
+                        $(`#note-text-${id}`).attr("contenteditable", false)
+                        $(`#note-code-${id}`).attr("contenteditable", false)
+                        $(`#edit-${id}`).empty()
+                        $(`#edit-${id}`).append($(`
+                            <a style="text-decoration: none;margin:13px;margin-bottom: 10px;color: #abaeb0"  href="#" onclick= "editMode(${id})">
+                                <i class="fa fa-edit"> </i> 編輯
+                            </a>
+                        `))
+                    }else if(res.data.errno === 1){
+                        swal({
+                            title:'標題不可為空白',
+                            text:' ',
+                            icon:'warning',
+                            buttons: false
+                        })
+                    }
+                })
+            }
+        }
 
         //利用json 儲存並利用id查找，在複製到剪貼簿
         function copy_(id){
@@ -306,6 +498,7 @@
             document.execCommand('copy');
             document.body.removeChild(el);
         }
+
         axios({
             url:'/',
             method:'POST',
@@ -324,18 +517,6 @@
             }else{
                 $('#load_data').append($(`
                     <a  href="/note/page/" class="dropdown-item">創建你的筆記</a>
-                `))
-            }
-            authThemes = res.data.authData
-            if(authThemes.length !== 0){
-                authThemes.forEach((item)=>{
-                    $('#load_authData').append($(`
-                        <a  href="/note/authPage?theme=${item.id}" class="dropdown-item">${item.title}</a>
-                    `))
-                })
-            }else{
-                $('#load_authData').append($(`
-                    <a  href="#" class="dropdown-item">目前沒有共用筆記</a>
                 `))
             }
         })

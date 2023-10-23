@@ -10,17 +10,12 @@ class Contact(models.Model):
     date = models.DateTimeField(auto_now_add=True)
 
 class User(AbstractUser):
-    # id = models.IntegerField(primary_key=True,auto_created=True)
     introduce = models.TextField(default='hello')
 
 class Theme(models.Model):
     title = models.TextField(null = True,blank = True)
     introduce = models.TextField(null = True,blank = True)
     author_id = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-
-class Auth(models.Model):
-    authUser = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete = models.CASCADE)
-    authTheme = models.ForeignKey(Theme,on_delete = models.CASCADE)
 
 class SubTheme(models.Model):
     title=  models.TextField()
